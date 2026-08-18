@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PATH-LENS — VIOLENCE-PATH India Research Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1E2A38;
+    --ink-2:#26374A;
+    --paper:#FCFBF8;
+    --paper-2:#F1EEE6;
+    --line:#E4E0D5;
+    --line-strong:#CFC8B4;
+    --accent:#3A5A82;
+    --accent-soft:#EAF0F6;
+    --accent-2:#B07A3E;
+    --text:#242018;
+    --text-muted:#7A7264;
+    --grade-a:#2F7A78;
+    --grade-b:#3E6690;
+    --grade-c:#C08A3E;
+    --grade-d:#B14F41;
+    --grade-u:#9B9384;
+    --ok:#2F8058;
+    --radius-lg:14px;
+    --radius-md:10px;
+    --radius-sm:8px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--ink);
+    font-family:'Inter',sans-serif;
+    font-size:15px;
+    color:var(--text);
+    -webkit-font-smoothing:antialiased;
+    line-height:1.5;
+  }
+  .mono{font-family:'JetBrains Mono','IBM Plex Mono',monospace;}
+  .serif{font-family:'Sora',sans-serif;}
+
+  /* ---------- Chrome ---------- */
+  header.chrome{
+    background:linear-gradient(180deg,var(--ink) 0%, var(--ink-2) 100%);
+    color:#F2EFE6;
+    padding:24px 32px 0 32px;
+    border-bottom:1px solid rgba(0,0,0,0.25);
+  }
+  .chrome-top{
+    display:flex; align-items:center; justify-content:space-between; gap:24px;
+    flex-wrap:wrap;
+    padding-bottom:18px;
+  }
+  .brand{display:flex; align-items:center; gap:14px;}
+  .brand .mark{
+    width:40px;height:40px;background:rgba(255,255,255,0.08);border:1.5px solid rgba(255,255,255,0.35);border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Sora',sans-serif; font-weight:700; font-size:15px; color:#F2EFE6;
+    flex:0 0 auto;
+  }
+  .brand h1{
+    font-family:'Sora',sans-serif; font-weight:700; font-size:24px; letter-spacing:0.2px; margin:0;
+  }
+  .brand .sub{
+    font-family:'Inter',sans-serif; font-weight:500; font-size:12px; color:#B7AF9A; letter-spacing:0.2px; margin-top:3px;
+  }
+  .case-select-wrap{display:flex; flex-direction:column; gap:6px; min-width:280px;}
+  .case-select-wrap label{font-family:'Inter',sans-serif; font-weight:600; font-size:11px; color:#B7AF9A; letter-spacing:0.6px; text-transform:uppercase;}
+  select#caseSelect{
+    background:rgba(255,255,255,0.06); color:#F2EFE6; border:1px solid rgba(255,255,255,0.22); border-radius:var(--radius-sm);
+    padding:10px 12px; font-family:'Inter',sans-serif; font-weight:500; font-size:13.5px; min-width:280px;
+    cursor:pointer;
+  }
+  select#caseSelect:hover{border-color:rgba(255,255,255,0.4);}
+  select#caseSelect option{
+    background:var(--paper); color:var(--text); font-family:'Inter',sans-serif; font-weight:500;
+    padding:8px 10px;
+  }
+  select#caseSelect option:checked, select#caseSelect option:hover{
+    background:var(--accent-soft); color:var(--ink);
+  }
+  nav.tabs{
+    display:flex; gap:6px; overflow-x:auto; padding:6px 0 14px 0; flex-wrap:wrap;
+  }
+  nav.tabs button{
+    background:transparent; border:1px solid transparent; border-radius:999px;
+    color:#B7AF9A; padding:8px 15px; font-family:'Inter',sans-serif; font-weight:600; font-size:12.5px;
+    letter-spacing:0.1px; cursor:pointer; white-space:nowrap; transition:all .15s ease;
+  }
+  nav.tabs button:hover{color:#F2EFE6; background:rgba(255,255,255,0.06);}
+  nav.tabs button.active{color:#1E2A38; background:#E7B979; border-color:#E7B979; font-weight:700;}
+
+  .boundary{
+    background:#3A2F1D; border-top:1px solid rgba(0,0,0,0.2); color:#E7DAB8;
+    font-family:'Inter',sans-serif; font-size:12.5px; padding:10px 32px; letter-spacing:0.1px; line-height:1.5;
+  }
+  .boundary b{color:#F3E4BC;}
+
+  /* ---------- Layout ---------- */
+  main{
+    max-width:1280px; margin:0 auto; padding:30px 32px 80px 32px;
+  }
+  .panel{
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:var(--radius-lg);
+    box-shadow:0 20px 40px -24px rgba(0,0,0,0.45);
+    padding:30px 32px;
+    position:relative;
+  }
+  .panel-head{
+    display:flex; justify-content:space-between; align-items:baseline; gap:16px;
+    border-bottom:1px solid var(--line); padding-bottom:16px; margin-bottom:20px;
+    flex-wrap:wrap;
+  }
+  .panel-head h2{font-family:'Sora',sans-serif; font-size:22px; margin:0; font-weight:700; color:var(--ink);}
+  .panel-head .tag{
+    font-family:'Inter',sans-serif; font-weight:600; font-size:11.5px; color:var(--text-muted);
+    letter-spacing:0.3px; background:var(--paper-2); padding:5px 10px; border-radius:999px;
+  }
+  .grid-2{display:grid; grid-template-columns:1fr 1fr; gap:18px;}
+  .grid-3{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
+  @media(max-width:900px){.grid-2,.grid-3{grid-template-columns:1fr;} main{padding:20px 16px 60px 16px;} .panel{padding:22px 18px;} header.chrome{padding:18px 18px 0 18px;} .boundary{padding:10px 18px;}}
+
+  table{width:100%; border-collapse:collapse; font-size:13.5px;}
+  th{
+    text-align:left; font-family:'Inter',sans-serif; font-size:11px; font-weight:700; letter-spacing:0.3px;
+    color:var(--text-muted); border-bottom:2px solid var(--line-strong);
+    padding:10px 12px; background:var(--paper-2);
+  }
+  th:first-child{border-top-left-radius:var(--radius-sm);}
+  th:last-child{border-top-right-radius:var(--radius-sm);}
+  td{padding:11px 12px; border-bottom:1px solid var(--line); vertical-align:top;}
+  tbody tr:nth-child(even) td{background:rgba(58,90,130,0.03);}
+  tbody tr:hover td{background:var(--accent-soft);}
+
+  .grade-chip{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:26px;height:26px;border-radius:50%;
+    font-family:'JetBrains Mono','IBM Plex Mono',monospace; font-weight:700; font-size:11.5px; color:#fff;
+    border:2px solid #fff; box-shadow:0 1px 3px rgba(0,0,0,0.2);
+  }
+  .grade-A{background:var(--grade-a);} .grade-B{background:var(--grade-b);}
+  .grade-C{background:var(--grade-c);} .grade-D{background:var(--grade-d);}
+  .grade-U{background:var(--grade-u);}
+
+  .status-tag{
+    font-family:'Inter',sans-serif; font-size:11px; font-weight:700; letter-spacing:0.2px; text-transform:capitalize;
+    padding:4px 11px; border-radius:999px; border:1px solid; display:inline-block;
+  }
+  .status-allegation{color:#93672E; border-color:#D8B778; background:#FBF1DD;}
+  .status-investigation{color:#2F5178; border-color:#9FB9D4; background:#E9F0F7;}
+  .status-charge{color:#A1443A; border-color:#E0AEA6; background:#FBE9E6;}
+  .status-finding{color:#2A6F6F; border-color:#A7D6D2; background:#E4F5F3;}
+  .status-conviction{color:#242018; border-color:#C9C0A6; background:#EFEAD9;}
+
+  .pill{
+    font-family:'Inter',sans-serif; font-weight:600; font-size:11.5px; padding:5px 11px; border-radius:999px;
+    background:var(--accent-soft); border:1px solid #C7D6E5; color:var(--accent);
+  }
+  .btn{
+    font-family:'Inter',sans-serif; font-weight:600; font-size:13px; letter-spacing:0.1px;
+    background:var(--accent); color:#fff; border:none; border-radius:var(--radius-sm);
+    padding:10px 16px; cursor:pointer; transition:transform .1s ease, box-shadow .1s ease;
+    box-shadow:0 2px 6px rgba(58,90,130,0.25);
+  }
+  .btn.secondary{background:#fff; color:var(--accent); border:1.5px solid var(--accent); box-shadow:none;}
+  .btn:hover{transform:translateY(-1px); box-shadow:0 4px 10px rgba(58,90,130,0.3);}
+  .btn.secondary:hover{background:var(--accent-soft);}
+  input,textarea,select.form{
+    width:100%; font-family:'Inter',sans-serif; font-size:13.5px; padding:9px 11px;
+    border:1.5px solid var(--line-strong); border-radius:var(--radius-sm); background:#fff; color:var(--text);
+  }
+  input:focus{outline:none; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft);}
+  label.field-label{
+    font-family:'Inter',sans-serif; font-weight:600; font-size:11px; text-transform:uppercase; letter-spacing:0.4px;
+    color:var(--text-muted); display:block; margin-bottom:5px;
+  }
+  .field{margin-bottom:14px;}
+
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:var(--radius-md); padding:18px 19px;
+  }
+  .muted{color:var(--text-muted); font-size:13px; line-height:1.6;}
+  .section-note{
+    font-size:13.5px; color:var(--text-muted); line-height:1.6; margin-top:-8px; margin-bottom:20px;
+    background:var(--paper-2); border-radius:var(--radius-sm); padding:12px 14px;
+  }
+  .kicker{font-family:'Inter',sans-serif; font-weight:700; font-size:11px; letter-spacing:0.4px; text-transform:uppercase; color:var(--accent-2);}
+
+  /* timeline */
+  .timeline-wrap{overflow-x:auto; padding:8px 0 20px 0;}
+  .timeline-track{position:relative; height:150px; min-width:900px; margin:0 10px;}
+  .timeline-axis{position:absolute; left:0; right:0; top:75px; height:2px; background:var(--line-strong); border-radius:2px;}
+  .tl-event{position:absolute; top:60px; width:2px; text-align:center;}
+  .tl-dot{
+    width:16px; height:16px; border-radius:50%; margin:0 auto; cursor:pointer;
+    border:2.5px solid #fff; box-shadow:0 1px 4px rgba(0,0,0,0.25);
+    transition:transform .12s ease;
+  }
+  .tl-dot:hover{transform:scale(1.4);}
+  .tl-label{
+    position:absolute; top:22px; width:120px; left:-59px; text-align:center;
+    font-family:'Inter',sans-serif; font-weight:500; font-size:10.5px; color:var(--text-muted); line-height:1.3;
+  }
+  .tl-day{
+    position:absolute; bottom:22px; width:70px; left:-34px; text-align:center;
+    font-family:'JetBrains Mono','IBM Plex Mono',monospace; font-size:10px; color:var(--accent); font-weight:600;
+  }
+  .legend-row{display:flex; gap:16px; flex-wrap:wrap; font-family:'Inter',sans-serif; font-size:11.5px; color:var(--text-muted); margin-top:8px;}
+  .legend-row .sw{display:inline-flex; align-items:center; gap:6px;}
+  .legend-row .dot{width:11px;height:11px;border-radius:50%;display:inline-block;}
+
+  .detail-card{margin-top:18px;}
+
+  /* filter bar */
+  .filter-bar{display:flex; gap:20px; flex-wrap:wrap; margin-bottom:18px; align-items:flex-end;
+    background:var(--paper-2); padding:14px 16px; border-radius:var(--radius-md);}
+  .filter-group{display:flex; flex-direction:column; gap:6px;}
+  .filter-group label{font-family:'Inter',sans-serif; font-weight:700; font-size:10.5px; text-transform:uppercase; letter-spacing:0.4px; color:var(--text-muted);}
+  .chip-toggle{
+    font-family:'Inter',sans-serif; font-weight:600; font-size:11.5px; padding:5px 11px; border-radius:999px;
+    border:1.5px solid var(--line-strong); background:#fff; cursor:pointer; color:var(--text-muted);
+    transition:all .12s ease;
+  }
+  .chip-toggle.on{background:var(--accent); color:#fff; border-color:var(--accent);}
+  .chip-toggle:hover{border-color:var(--accent);}
+
+  /* pathway graph */
+  .pathway-flow{display:flex; align-items:center; overflow-x:auto; padding:16px 4px 10px 4px; gap:0;}
+  .pf-node{
+    flex:0 0 auto; display:flex; flex-direction:column; align-items:center; width:118px; text-align:center;
+  }
+  .pf-badge{
+    width:48px; height:48px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    color:#fff; font-family:'JetBrains Mono','IBM Plex Mono',monospace; font-weight:700; font-size:14px; border:3px solid #fff;
+    box-shadow:0 2px 6px rgba(0,0,0,0.2);
+  }
+  .pf-title{font-size:11px; font-family:'Inter',sans-serif; font-weight:600; margin-top:8px; color:var(--text); line-height:1.35;}
+  .pf-sub{font-size:10px; color:var(--text-muted); margin-top:2px;}
+  .pf-arrow{flex:0 0 auto; width:34px; height:2px; background:var(--line-strong); position:relative; margin-top:-30px;}
+  .pf-arrow::after{
+    content:""; position:absolute; right:-1px; top:-4px; border-left:7px solid var(--line-strong);
+    border-top:5px solid transparent; border-bottom:5px solid transparent;
+  }
+
+  /* network map */
+  .net-wrap{display:flex; justify-content:center; padding:12px 0;}
+
+  /* scenario cards */
+  .risk-field .rk-label{font-family:'Inter',sans-serif; font-weight:700; font-size:10.5px; text-transform:uppercase; letter-spacing:0.4px; color:var(--accent-2);}
+  .risk-field .rk-val{font-size:13.5px; line-height:1.6; margin-top:5px;}
+
+  /* reliability */
+  .kappa-box{
+    display:flex; gap:28px; align-items:center; background:#fff; border:1px solid var(--line);
+    padding:18px 20px; border-radius:var(--radius-md); margin-bottom:20px; flex-wrap:wrap;
+  }
+  .kappa-num{font-family:'Sora',sans-serif; font-size:36px; font-weight:800; color:var(--accent);}
+  .kappa-label{font-family:'Inter',sans-serif; font-weight:600; font-size:11px; text-transform:uppercase; color:var(--text-muted); letter-spacing:0.3px;}
+  .agree-y{color:var(--ok); font-weight:700;}
+  .agree-n{color:var(--grade-d); font-weight:700;}
+
+  /* analytics */
+  .metric-card{background:#fff; border:1px solid var(--line); border-radius:var(--radius-md); padding:16px 17px;}
+  .metric-card .mv{font-family:'Sora',sans-serif; font-size:26px; font-weight:800; color:var(--accent);}
+  .metric-card .ml{font-family:'Inter',sans-serif; font-weight:600; font-size:10.5px; text-transform:uppercase; color:var(--text-muted); letter-spacing:0.3px; margin-top:4px;}
+  .matrix-table td, .matrix-table th{text-align:center;}
+  .matrix-table td.diag{background:var(--accent-soft); font-weight:700;}
+
+  footer.chrome-foot{
+    text-align:center; padding:24px; color:#8A8578; font-family:'Inter',sans-serif; font-size:11.5px;
+  }
+  ::-webkit-scrollbar{height:9px; width:9px;}
+  ::-webkit-scrollbar-thumb{background:var(--line-strong); border-radius:5px;}
+
+  /* Material-inspired application shell */
+  :root{--ink:#202124;--ink-2:#202124;--paper:#fff;--paper-2:#f8fafd;--line:#dadce0;--line-strong:#bdc1c6;--accent:#0b57d0;--accent-soft:#e8f0fe;--accent-2:#5f6368;--text:#202124;--text-muted:#5f6368;--grade-a:#137333;--grade-b:#0b57d0;--grade-c:#b06000;--grade-d:#c5221f;--grade-u:#5f6368;--ok:#137333;--radius-lg:16px;--radius-md:12px;--radius-sm:8px;}
+  body{background:#f8fafd;font-family:'Roboto',Arial,sans-serif;color:#202124;}
+  .mono{font-family:'Roboto Mono',monospace;}.serif{font-family:'Roboto',Arial,sans-serif;}
+  header.chrome{background:#fff;color:#202124;padding:16px 32px 0;border-bottom:1px solid #dadce0;box-shadow:0 1px 2px rgba(60,64,67,.08);}
+  .chrome-top{padding-bottom:12px;}.brand{gap:12px;}.brand .mark{width:40px;height:40px;background:#e8f0fe;border:0;border-radius:12px;color:#0b57d0;font-family:'Roboto',Arial,sans-serif;font-weight:700;}
+  .brand h1{font-family:'Roboto',Arial,sans-serif;font-size:22px;font-weight:500;letter-spacing:0;color:#202124;}.brand .sub{font-family:'Roboto',Arial,sans-serif;color:#5f6368;font-size:11px;}
+  .case-select-wrap label{font-family:'Roboto',Arial,sans-serif;color:#5f6368;letter-spacing:.5px;}.case-select-wrap{min-width:300px;}
+  select#caseSelect{background:#fff;color:#202124;border:1px solid #dadce0;border-radius:8px;padding:10px 12px;font-family:'Roboto',Arial,sans-serif;box-shadow:0 1px 2px rgba(60,64,67,.08);}
+  select#caseSelect:hover{border-color:#0b57d0;}select#caseSelect:focus{outline:2px solid #c2e7ff;outline-offset:1px;}select#caseSelect option{background:#fff;color:#202124;}
+  nav.tabs{gap:0;overflow-x:auto;flex-wrap:nowrap;padding:0;}nav.tabs button{position:relative;border:0;border-radius:0;color:#5f6368;padding:13px 14px 12px;font-family:'Roboto',Arial,sans-serif;font-weight:500;font-size:13px;}
+  nav.tabs button:hover{color:#0b57d0;background:#f8fafd;}nav.tabs button.active{color:#0b57d0;background:transparent;border:0;font-weight:700;}nav.tabs button.active::after{content:'';position:absolute;height:3px;background:#0b57d0;border-radius:3px 3px 0 0;left:12px;right:12px;bottom:0;}
+  .boundary{background:#e8f0fe;border:0;border-bottom:1px solid #c2e7ff;color:#174ea6;padding:10px 32px;font-family:'Roboto',Arial,sans-serif;}.boundary b{color:#174ea6;}
+  main{max-width:1440px;padding:28px 32px 56px;}.panel{background:#fff;border:1px solid #dadce0;border-radius:16px;box-shadow:0 1px 2px rgba(60,64,67,.12),0 1px 3px rgba(60,64,67,.08);padding:28px 30px;}
+  .panel-head{border-bottom:1px solid #e8eaed;padding-bottom:14px;margin-bottom:18px;}.panel-head h2{font-family:'Roboto',Arial,sans-serif;font-size:24px;font-weight:500;color:#202124;}.panel-head .tag,.pill{font-family:'Roboto',Arial,sans-serif;color:#174ea6;background:#e8f0fe;border:0;border-radius:18px;font-weight:500;}
+  table{font-size:14px;}th{background:#f8fafd;color:#5f6368;border-bottom:1px solid #dadce0;font-family:'Roboto',Arial,sans-serif;font-weight:500;padding:12px;}td{padding:13px 12px;border-bottom:1px solid #e8eaed;}tbody tr:nth-child(even) td{background:transparent;}tbody tr:hover td{background:#f8fafd;}
+  .grade-chip{border:2px solid #fff;box-shadow:0 1px 2px rgba(60,64,67,.2);font-family:'Roboto Mono',monospace;}.status-tag{font-family:'Roboto',Arial,sans-serif;font-weight:500;border-radius:6px;}
+  .btn{background:#0b57d0;color:#fff;border-radius:20px;padding:10px 18px;font-family:'Roboto',Arial,sans-serif;font-weight:500;box-shadow:none;}.btn:hover{background:#0842a0;transform:none;box-shadow:0 1px 2px rgba(60,64,67,.2);}.btn:focus-visible{outline:3px solid #c2e7ff;outline-offset:2px;}.btn.secondary{background:#fff;color:#0b57d0;border:1px solid #747775;}.btn.secondary:hover{background:#f8fafd;}
+  input,textarea,select.form{font-family:'Roboto',Arial,sans-serif;border:1px solid #747775;border-radius:6px;padding:11px 12px;}input:focus,textarea:focus,select.form:focus{outline:2px solid #c2e7ff;outline-offset:1px;border-color:#0b57d0;box-shadow:none;}label.field-label{font-family:'Roboto',Arial,sans-serif;color:#5f6368;font-weight:500;}
+  .card,.metric-card,.kappa-box{background:#fff;border:1px solid #dadce0;border-radius:12px;box-shadow:none;}.card{padding:18px;}.section-note{background:#f8fafd;border-left:4px solid #0b57d0;border-radius:4px;color:#3c4043;padding:12px 14px;}.kicker,.risk-field .rk-label{font-family:'Roboto',Arial,sans-serif;color:#5f6368;font-weight:500;}.metric-card .mv,.kappa-num{font-family:'Roboto',Arial,sans-serif;color:#202124;}.metric-card .ml,.kappa-label{font-family:'Roboto',Arial,sans-serif;}
+  .filter-bar{background:#f8fafd;border:1px solid #e8eaed;border-radius:12px;}.chip-toggle{font-family:'Roboto',Arial,sans-serif;border:1px solid #747775;border-radius:16px;color:#3c4043;}.chip-toggle.on{background:#e8f0fe;color:#174ea6;border-color:#174ea6;}.chip-toggle:hover{border-color:#0b57d0;}
+  .timeline-axis,.pf-arrow{background:#bdc1c6;}.pf-arrow::after{border-left-color:#bdc1c6;}.tl-dot,.pf-badge{box-shadow:0 1px 2px rgba(60,64,67,.24);}.tl-day{font-family:'Roboto Mono',monospace;color:#0b57d0;}.pf-title{font-family:'Roboto',Arial,sans-serif;}.legend-row{font-family:'Roboto',Arial,sans-serif;}
+  footer.chrome-foot{color:#5f6368;font-family:'Roboto',Arial,sans-serif;}
+  @media(max-width:900px){header.chrome{padding:14px 16px 0;}.boundary{padding:10px 16px;}main{padding:20px 16px 40px;}.panel{padding:22px 18px;}.case-select-wrap,select#caseSelect{min-width:100%;}.chrome-top{align-items:stretch;}.brand .sub{line-height:1.4;}.panel-head h2{font-size:22px;}}
+</style>
+</head>
+<body>
+
+<header class="chrome">
+  <div class="chrome-top">
+    <div class="brand">
+      <div class="mark">PL</div>
+      <div>
+        <h1>PATH-LENS</h1>
+        <div class="sub">VIOLENCE-PATH INDIA — RESEARCH PROTOTYPE · NFSU / BPR&amp;D EXECUTABLE MANUAL, §10</div>
+      </div>
+    </div>
+    <div class="case-select-wrap">
+      <label>Active research case</label>
+      <select id="caseSelect" onchange="onCaseChange()"></select>
+    </div>
+  </div>
+  <nav class="tabs" id="tabNav"></nav>
+</header>
+<div class="boundary">
+  <b>Research boundary —</b> this prototype does not diagnose an offender, determine guilt, replace a court, or generate an automated detention/sentencing score. All case material below is synthetic and de-identified, built for methodology demonstration.
+</div>
+
+<main id="app"></main>
+
+<footer class="chrome-foot">PATH-LENS prototype · one-month executable build · not a validated clinical or forensic instrument · Aug 2026</footer>
+
+<script>
+/* =========================================================================
+   SEED DATA — synthetic, de-identified, matching CASE / EVENT / SOURCE /
+   LEGAL_MAP / RISK_FORMULATION schema from Section 6 of the manual.
+   Scenarios A–D correspond to Section 12 demonstration scenarios.
+   ========================================================================= */
+
+const GRADE_COLOR = {A:'var(--grade-a)', B:'var(--grade-b)', C:'var(--grade-c)', D:'var(--grade-d)', U:'var(--grade-u)'};
+const GRADE_LABEL = {A:'Strongly corroborated', B:'Corroborated', C:'Single-source', D:'Contested', U:'Unknown'};
+
+const CASES = [
+  {id:'IN-2026-A-001', pathway:'Reactive Escalation', jurisdiction:'State-X, urban', offence:'Assault / grievous hurt', relationship:'Neighbour / acquaintance', ageBand:'25–34', sex:'M', status:'Under investigation', dataAvail:'FIR, medical, witness', window:'13 days'},
+  {id:'IN-2026-B-002', pathway:'Grievance / Fixation', jurisdiction:'State-Y, urban', offence:'Criminal intimidation / stalking (no violent act)', relationship:'Former colleague', ageBand:'25–34', sex:'M', status:'Complaint on record; no charge', dataAvail:'Messages log (witness-produced), workplace security report', window:'42 days'},
+  {id:'IN-2026-C-003', pathway:'Coercive-Control / Relationship Violence', jurisdiction:'State-Z, semi-urban', offence:'Domestic violence / hurt', relationship:'Intimate partner', ageBand:'35–44', sex:'M', status:'Protection order granted', dataAvail:'FIR, medical, DV protection order, counsellor note', window:'47 days'},
+  {id:'IN-2026-D-004', pathway:'Group-Enabled Violence', jurisdiction:'State-X, urban', offence:'Rioting / unlawful assembly', relationship:'Peer group / rival group', ageBand:'18–24', sex:'M', status:'FIR registered, multiple accused', dataAvail:'FIR, police dispersal log, social-media posts (public)', window:'10 days'},
+];
+
+const SOURCES = [
+  // Case A
+  {id:'S-A1', case:'IN-2026-A-001', type:'FIR', date:'Day 12', provenance:'Official record', corroboration:2, contradiction:false, admissibility:'Admissible', grade:'A'},
+  {id:'S-A2', case:'IN-2026-A-001', type:'Medical record', date:'Day 12', provenance:'Hospital', corroboration:1, contradiction:false, admissibility:'Admissible', grade:'A'},
+  {id:'S-A3', case:'IN-2026-A-001', type:'Witness statement', date:'Day 3', provenance:'Neighbour', corroboration:1, contradiction:false, admissibility:'Admissible (research-only use)', grade:'B'},
+  {id:'S-A4', case:'IN-2026-A-001', type:'Bystander account', date:'Day 12', provenance:'Unverified social account', corroboration:0, contradiction:true, admissibility:'Research-only, not verified', grade:'D'},
+
+  // Case B
+  {id:'S-B1', case:'IN-2026-B-002', type:'Digital record', date:'Day 5–35', provenance:'Message log, complainant-produced', corroboration:1, contradiction:false, admissibility:'Research-only pending forensic authentication', grade:'B'},
+  {id:'S-B2', case:'IN-2026-B-002', type:'Security report', date:'Day 35', provenance:'Workplace security log', corroboration:1, contradiction:false, admissibility:'Admissible', grade:'B'},
+  {id:'S-B3', case:'IN-2026-B-002', type:'Witness statement', date:'Day 40', provenance:'Single acquaintance, uncorroborated', corroboration:0, contradiction:false, admissibility:'Not independently verified', grade:'C'},
+  {id:'S-B4', case:'IN-2026-B-002', type:'Complaint record', date:'Day 42', provenance:'Formal workplace complaint', corroboration:1, contradiction:false, admissibility:'Admissible', grade:'B'},
+
+  // Case C
+  {id:'S-C1', case:'IN-2026-C-003', type:'FIR', date:'Day 45', provenance:'Official record', corroboration:2, contradiction:false, admissibility:'Admissible', grade:'A'},
+  {id:'S-C2', case:'IN-2026-C-003', type:'Medical record', date:'Day 45', provenance:'Hospital', corroboration:1, contradiction:false, admissibility:'Admissible', grade:'A'},
+  {id:'S-C3', case:'IN-2026-C-003', type:'Counsellor note', date:'Day 15–30', provenance:'Registered counsellor (with consent)', corroboration:1, contradiction:false, admissibility:'Research-only, confidentiality-governed', grade:'B'},
+  {id:'S-C4', case:'IN-2026-C-003', type:'Protection order', date:'Day 47', provenance:'Court record', corroboration:2, contradiction:false, admissibility:'Admissible', grade:'A'},
+
+  // Case D
+  {id:'S-D1', case:'IN-2026-D-004', type:'FIR', date:'Day 10', provenance:'Official record', corroboration:3, contradiction:false, admissibility:'Admissible', grade:'A'},
+  {id:'S-D2', case:'IN-2026-D-004', type:'Police dispersal log', date:'Day 10', provenance:'Official record', corroboration:1, contradiction:false, admissibility:'Admissible', grade:'A'},
+  {id:'S-D3', case:'IN-2026-D-004', type:'Public social-media post', date:'Day 9', provenance:'Public post, screenshot-preserved', corroboration:1, contradiction:false, admissibility:'Research-only, provenance-flagged', grade:'B'},
+  {id:'S-D4', case:'IN-2026-D-004', type:'Rumour / unverified account', date:'Day 8', provenance:'Second-hand, uncorroborated', corroboration:0, contradiction:true, admissibility:'Not verified', grade:'D'},
+];
+
+const EVENTS = [
+  // ---- Case A: Reactive Escalation ----
+  {id:'E-A1', case:'IN-2026-A-001', day:1, code:'G', type:'Baseline conflict / grievance formation', actor:'Subject-A1', target:'Neighbour-A2', location:'Residential', channel:'In person', behaviour:'Dispute over shared boundary wall; verbal argument, no threats.', intensity:1, specificity:1, opportunity:false, protective:false, source:'S-A3', grade:'B'},
+  {id:'E-A2', case:'IN-2026-A-001', day:3, code:'T', type:'Threat or intimidation', actor:'Subject-A1', target:'Neighbour-A2', location:'Residential', channel:'In person', behaviour:'Raised voice, vague hostile remark during second dispute.', intensity:2, specificity:1, opportunity:false, protective:false, source:'S-A3', grade:'B'},
+  {id:'E-A3', case:'IN-2026-A-001', day:12, code:'S', type:'Substance-related disinhibition', actor:'Subject-A1', target:'—', location:'Community gathering', channel:'In person', behaviour:'Intoxication observed at neighbourhood function preceding confrontation.', intensity:2, specificity:1, opportunity:true, protective:false, source:'S-A4', grade:'D'},
+  {id:'E-A4', case:'IN-2026-A-001', day:12, code:'X', type:'Acute trigger', actor:'Neighbour-A2', target:'Subject-A1', location:'Community gathering', channel:'In person', behaviour:'Renewed argument over the same boundary dispute in front of others.', intensity:3, specificity:2, opportunity:true, protective:false, source:'S-A3', grade:'B'},
+  {id:'E-A5', case:'IN-2026-A-001', day:12, code:'V', type:'Violent act', actor:'Subject-A1', target:'Neighbour-A2', location:'Community gathering', channel:'In person', behaviour:'Physical assault causing injury requiring hospitalisation.', intensity:5, specificity:5, opportunity:true, protective:false, source:'S-A2', grade:'A'},
+  {id:'E-A6', case:'IN-2026-A-001', day:12, code:'P', type:'Post-event concealment/flight/help-seeking/surrender', actor:'Subject-A1', target:'—', location:'Local area', channel:'—', behaviour:'Left the scene; surrendered to police the same evening.', intensity:2, specificity:3, opportunity:false, protective:false, source:'S-A1', grade:'A'},
+  {id:'E-A7', case:'IN-2026-A-001', day:13, code:'R', type:'Protective intervention / de-escalation', actor:'Police / medical services', target:'Neighbour-A2', location:'Hospital / station', channel:'In person', behaviour:'Medical treatment provided; FIR registered; parties separated.', intensity:1, specificity:1, opportunity:false, protective:true, source:'S-A1', grade:'A'},
+
+  // ---- Case B: Grievance / Fixation ----
+  {id:'E-B1', case:'IN-2026-B-002', day:1, code:'G', type:'Baseline conflict / grievance formation', actor:'Subject-B1', target:'Colleague-B2', location:'Workplace', channel:'In person', behaviour:'Rejected social approach; subject reacts with perceived grievance.', intensity:1, specificity:1, opportunity:false, protective:false, source:'S-B3', grade:'C'},
+  {id:'E-B2', case:'IN-2026-B-002', day:5, code:'U', type:'Repeated unwanted contact / surveillance-type behaviour', actor:'Subject-B1', target:'Colleague-B2', location:'Digital', channel:'Messaging app', behaviour:'Repeated unsolicited messages after being asked to stop.', intensity:2, specificity:1, opportunity:false, protective:false, source:'S-B1', grade:'B'},
+  {id:'E-B3', case:'IN-2026-B-002', day:18, code:'U', type:'Repeated unwanted contact / surveillance-type behaviour', actor:'Subject-B1', target:'Colleague-B2', location:'Digital', channel:'Messaging app', behaviour:'Message frequency increases; references to colleague\'s daily schedule.', intensity:3, specificity:2, opportunity:true, protective:false, source:'S-B1', grade:'B'},
+  {id:'E-B4', case:'IN-2026-B-002', day:22, code:'L', type:'Leakage/communication of violent intent', actor:'Subject-B1', target:'—', location:'Digital', channel:'Messaging app', behaviour:'Vague hostile message referencing being "pushed too far".', intensity:3, specificity:2, opportunity:false, protective:false, source:'S-B1', grade:'B'},
+  {id:'E-B5', case:'IN-2026-B-002', day:30, code:'T', type:'Threat or intimidation', actor:'Subject-B1', target:'Colleague-B2', location:'Digital', channel:'Messaging app', behaviour:'Message content becomes more specific about location and timing.', intensity:4, specificity:4, opportunity:false, protective:false, source:'S-B1', grade:'B'},
+  {id:'E-B6', case:'IN-2026-B-002', day:35, code:'B', type:'Boundary violation', actor:'Subject-B1', target:'Colleague-B2', location:'Workplace', channel:'In person', behaviour:'Appeared uninvited near colleague\'s workplace exit.', intensity:4, specificity:3, opportunity:true, protective:false, source:'S-B2', grade:'B'},
+  {id:'E-B7', case:'IN-2026-B-002', day:40, code:'A', type:'Weapon/access change', actor:'Subject-B1', target:'—', location:'Unknown', channel:'—', behaviour:'Single uncorroborated account of subject referencing acquiring a weapon.', intensity:4, specificity:2, opportunity:true, protective:false, source:'S-B3', grade:'C'},
+  {id:'E-B8', case:'IN-2026-B-002', day:42, code:'R', type:'Protective intervention / de-escalation', actor:'Employer / complainant', target:'Subject-B1', location:'Workplace', channel:'Formal process', behaviour:'Formal complaint filed; workplace access restricted; pathway interrupted before any violent act.', intensity:1, specificity:1, opportunity:false, protective:true, source:'S-B4', grade:'B'},
+
+  // ---- Case C: Coercive-Control / Relationship Violence ----
+  {id:'E-C1', case:'IN-2026-C-003', day:1, code:'CC', type:'Coercive or controlling conduct', actor:'Subject-C1', target:'Partner-C2', location:'Shared residence', channel:'In person', behaviour:'Monitoring of partner\'s phone and movements begins.', intensity:2, specificity:1, opportunity:true, protective:false, source:'S-C3', grade:'B'},
+  {id:'E-C2', case:'IN-2026-C-003', day:15, code:'CC', type:'Coercive or controlling conduct', actor:'Subject-C1', target:'Partner-C2', location:'Shared residence', channel:'In person', behaviour:'Restricts partner\'s contact with family; controls finances.', intensity:3, specificity:2, opportunity:true, protective:false, source:'S-C3', grade:'B'},
+  {id:'E-C3', case:'IN-2026-C-003', day:20, code:'B', type:'Boundary violation', actor:'Subject-C1', target:'Partner-C2', location:'Shared residence', channel:'In person', behaviour:'Prevents partner from leaving residence during argument.', intensity:3, specificity:3, opportunity:true, protective:false, source:'S-C3', grade:'B'},
+  {id:'E-C4', case:'IN-2026-C-003', day:33, code:'T', type:'Threat or intimidation', actor:'Subject-C1', target:'Partner-C2', location:'Shared residence', channel:'In person', behaviour:'Explicit threat made after partner raises intent to separate.', intensity:4, specificity:4, opportunity:false, protective:false, source:'S-C3', grade:'B'},
+  {id:'E-C5', case:'IN-2026-C-003', day:45, code:'X', type:'Acute trigger', actor:'Partner-C2', target:'Subject-C1', location:'Shared residence', channel:'In person', behaviour:'Partner initiates separation / removal of belongings.', intensity:3, specificity:3, opportunity:true, protective:false, source:'S-C1', grade:'A'},
+  {id:'E-C6', case:'IN-2026-C-003', day:45, code:'V', type:'Violent act', actor:'Subject-C1', target:'Partner-C2', location:'Shared residence', channel:'In person', behaviour:'Physical assault during separation attempt; injury documented.', intensity:5, specificity:5, opportunity:true, protective:false, source:'S-C2', grade:'A'},
+  {id:'E-C7', case:'IN-2026-C-003', day:46, code:'P', type:'Post-event concealment/flight/help-seeking/surrender', actor:'Partner-C2', target:'—', location:'Shelter', channel:'—', behaviour:'Victim seeks shelter and medical attention; reports to police.', intensity:2, specificity:2, opportunity:false, protective:true, source:'S-C1', grade:'A'},
+  {id:'E-C8', case:'IN-2026-C-003', day:47, code:'R', type:'Protective intervention / de-escalation', actor:'Court', target:'Subject-C1', location:'Court', channel:'Formal process', behaviour:'Protection order granted under domestic violence law; contact restricted.', intensity:1, specificity:1, opportunity:false, protective:true, source:'S-C4', grade:'A'},
+
+  // ---- Case D: Group-Enabled Violence ----
+  {id:'E-D1', case:'IN-2026-D-004', day:1, code:'G', type:'Baseline conflict / grievance formation', actor:'Group-D1', target:'Group-D2', location:'Locality', channel:'In person', behaviour:'Ongoing rivalry between two peer groups over prior dispute.', intensity:2, specificity:1, opportunity:false, protective:false, source:'S-D4', grade:'D'},
+  {id:'E-D2', case:'IN-2026-D-004', day:8, code:'N', type:'Network & opportunity: group assembly', actor:'Group-D1', target:'—', location:'Public space', channel:'In person', behaviour:'Members of Group-D1 assemble; numbers and coordination increase.', intensity:2, specificity:2, opportunity:true, protective:false, source:'S-D3', grade:'B'},
+  {id:'E-D3', case:'IN-2026-D-004', day:9, code:'L', type:'Leakage/communication of violent intent', actor:'Group-D1 member', target:'Group-D2', location:'Digital (public post)', channel:'Social media', behaviour:'Public post referencing intent to confront rival group.', intensity:3, specificity:3, opportunity:false, protective:false, source:'S-D3', grade:'B'},
+  {id:'E-D4', case:'IN-2026-D-004', day:10, code:'B', type:'Boundary violation', actor:'Group-D1', target:'Group-D2', location:'Public space', channel:'In person', behaviour:'Group-D1 enters area associated with Group-D2.', intensity:3, specificity:3, opportunity:true, protective:false, source:'S-D1', grade:'A'},
+  {id:'E-D5', case:'IN-2026-D-004', day:10, code:'V', type:'Violent act', actor:'Group-D1 & Group-D2', target:'Mutual', location:'Public space', channel:'In person', behaviour:'Clash between groups; multiple individuals involved, injuries reported.', intensity:5, specificity:5, opportunity:true, protective:false, source:'S-D1', grade:'A'},
+  {id:'E-D6', case:'IN-2026-D-004', day:10, code:'P', type:'Post-event concealment/flight/help-seeking/surrender', actor:'Group-D1 & Group-D2', target:'—', location:'Locality', channel:'—', behaviour:'Dispersal and flight of several participants before police arrival.', intensity:2, specificity:2, opportunity:false, protective:false, source:'S-D2', grade:'A'},
+  {id:'E-D7', case:'IN-2026-D-004', day:10, code:'R', type:'Protective intervention / de-escalation', actor:'Police', target:'Group-D1 & Group-D2', location:'Public space', channel:'In person', behaviour:'Police dispersal and detention of identified participants.', intensity:1, specificity:1, opportunity:false, protective:true, source:'S-D2', grade:'A'},
+];
+
+const LEGAL_MAP = [
+  {event:'E-A5', case:'IN-2026-A-001', statute:'BNS 2023', section:'s.117 — voluntarily causing grievous hurt', element:'Injury caused by intentional act', support:'Medical record (S-A2); FIR (S-A1)', contradiction:'None on record', status:'investigation'},
+  {event:'E-A2', case:'IN-2026-A-001', statute:'BNS 2023', section:'s.351 — criminal intimidation', element:'Threatening words during dispute', support:'Witness statement (S-A3)', contradiction:'None on record', status:'allegation'},
+
+  {event:'E-B5', case:'IN-2026-B-002', statute:'BNS 2023', section:'s.351 — criminal intimidation', element:'Specific threatening message content', support:'Message log (S-B1)', contradiction:'Authentication pending', status:'allegation'},
+  {event:'E-B3', case:'IN-2026-B-002', statute:'BNS 2023 (offences relating to women)', section:'Stalking-related provision — candidate mapping only', element:'Repeated unwanted contact after refusal', support:'Message log (S-B1); security report (S-B2)', contradiction:'None on record', status:'allegation'},
+
+  {event:'E-C6', case:'IN-2026-C-003', statute:'BNS 2023', section:'s.115 — voluntarily causing hurt', element:'Physical assault causing injury', support:'FIR (S-C1); medical record (S-C2)', contradiction:'None on record', status:'investigation'},
+  {event:'E-C2', case:'IN-2026-C-003', statute:'Protection of Women from Domestic Violence Act, 2005', section:'s.3 — definition of domestic violence (coercive/controlling conduct)', element:'Financial control and isolation within shared household', support:'Counsellor note (S-C3)', contradiction:'None on record', status:'finding'},
+  {event:'E-C8', case:'IN-2026-C-003', statute:'Protection of Women from Domestic Violence Act, 2005', section:'s.18 — protection order', element:'Court-ordered protection following documented abuse', support:'Court record (S-C4)', contradiction:'—', status:'finding'},
+
+  {event:'E-D5', case:'IN-2026-D-004', statute:'BNS 2023', section:'s.191/§ unlawful assembly & rioting family — candidate mapping only', element:'Group violence in public space', support:'FIR (S-D1); dispersal log (S-D2)', contradiction:'None on record', status:'investigation'},
+  {event:'E-D3', case:'IN-2026-D-004', statute:'BNS 2023', section:'Abetment / conspiracy provisions — candidate mapping only', element:'Public statement of intent preceding assembly', support:'Public post (S-D3)', contradiction:'Post authorship attribution not independently verified', status:'allegation'},
+];
+
+const RISK_FORMULATIONS = [
+  {case:'IN-2026-A-001', scenario:'Scenario 1', pathway:'Reactive / impulsive escalation from an unresolved low-grade dispute, catalysed by situational disinhibition.',
+   dynamic:'Unresolved boundary dispute; repeat proximity at community gatherings; situational alcohol use.',
+   protective:'Prompt police response; medical care administered; subject surrendered voluntarily.',
+   scenario1:'Renewed contact at a shared community setting under disinhibited conditions could reproduce a similar acute-trigger pattern.',
+   scenario2:'Absent further proximity or disinhibiting conditions, likelihood of recurrence is assessed as lower.',
+   warning:'Renewed direct contact with Neighbour-A2; further situational substance use; unresolved property dispute.',
+   management:'Mediation of the underlying boundary dispute; structured separation at shared community events.',
+   confidence:'Moderate — anchored on Grade-A medical/FIR evidence for the violent act; Grade-D contested account for disinhibition context.'},
+
+  {case:'IN-2026-B-002', scenario:'Scenario 1', pathway:'Grievance / fixation pathway with escalating contact specificity, interrupted before any violent act.',
+   dynamic:'Increasing message specificity (TSD); appearance near workplace; single uncorroborated access-change reference.',
+   protective:'Workplace formal complaint and access restriction; documented, verified interruption of the pathway.',
+   scenario1:'Without intervention, continued escalation in contact specificity and physical proximity was the most plausible trajectory.',
+   scenario2:'A disengagement pathway (loss of interest, redirection) remains possible and cannot be excluded given short observation window.',
+   warning:'Any renewed contact attempt after the access restriction; corroboration of the Grade-C weapon-access reference.',
+   management:'Maintain access restriction; verify and, if substantiated, escalate the uncorroborated weapon-access account through appropriate channels.',
+   confidence:'Moderate-low — core escalation events are Grade-B; the highest-severity indicator (weapon access) is Grade-C, single-source.'},
+
+  {case:'IN-2026-C-003', scenario:'Scenario 1', pathway:'Coercive-control pathway culminating in acute violence at a separation attempt.',
+   dynamic:'Escalating control and isolation; explicit threat following disclosure of intent to separate.',
+   protective:'Victim help-seeking behaviour; shelter access; court protection order granted.',
+   scenario1:'Separation-associated violence risk is the most plausible concern, consistent with documented literature on separation as a high-risk period.',
+   scenario2:'Continued coercive control without further acute violence if protective order compliance holds.',
+   warning:'Any breach of the protection order; renewed monitoring or contact attempts; further isolation behaviour.',
+   management:'Protection-order compliance monitoring; safety planning support for Partner-C2; referral pathways independent of this dashboard.',
+   confidence:'High for the documented assault and protective response (Grade A); moderate for earlier coercive-control pattern (Grade B, single-source counsellor note).'},
+
+  {case:'IN-2026-D-004', scenario:'Scenario 1', pathway:'Group-enabled violence pathway driven by peer assembly and public leakage of intent.',
+   dynamic:'Rapid assembly and public statement of intent within a two-day window; entry into contested territory.',
+   protective:'Police dispersal; detentions; no ongoing assembly recorded after Day 10.',
+   scenario1:'Renewed inter-group contact in the same contested public space carries recurrence potential given the unresolved underlying rivalry.',
+   scenario2:'Individual-level attribution varies: some participants show pre-event leakage (Grade B), others are linked only by presence (attribution must remain separated per individual).',
+   warning:'Renewed group assembly near the contested locality; further public leakage posts referencing the rivalry.',
+   management:'Community-level de-escalation and monitoring of the underlying rivalry; individualised (not group-wide) legal attribution.',
+   confidence:'High for the assembly and violent act (Grade A, official records); moderate for the originating grievance (Grade D, contested/unverified).'},
+];
+
+// Reliability Lab — double-coded subset (20%+ of events), binary code:
+// "Escalation Indicator Present" (Y/N) coded independently by two coders.
+const RELIABILITY = [
+  {event:'E-A2', case:'IN-2026-A-001', coderA:'Y', coderB:'Y'},
+  {event:'E-A4', case:'IN-2026-A-001', coderA:'Y', coderB:'Y'},
+  {event:'E-A6', case:'IN-2026-A-001', coderA:'N', coderB:'Y'},
+  {event:'E-B3', case:'IN-2026-B-002', coderA:'Y', coderB:'Y'},
+  {event:'E-B5', case:'IN-2026-B-002', coderA:'Y', coderB:'Y'},
+  {event:'E-B7', case:'IN-2026-B-002', coderA:'Y', coderB:'N'},
+  {event:'E-C3', case:'IN-2026-C-003', coderA:'Y', coderB:'Y'},
+  {event:'E-C4', case:'IN-2026-C-003', coderA:'Y', coderB:'Y'},
+  {event:'E-D2', case:'IN-2026-D-004', coderA:'N', coderB:'N'},
+  {event:'E-D3', case:'IN-2026-D-004', coderA:'Y', coderB:'Y'},
+  {event:'E-D4', case:'IN-2026-D-004', coderA:'Y', coderB:'N'},
+  {event:'E-C1', case:'IN-2026-C-003', coderA:'N', coderB:'N'},
+];
+
+/* =========================================================================
+   STATE + HELPERS
+   ========================================================================= */
+let state = { caseId: CASES[0].id, tab: 'intake', tlFilters:{grade:new Set(['A','B','C','D','U']), typeQuery:''} };
+
+function caseEvents(id){ return EVENTS.filter(e=>e.case===id).sort((a,b)=>a.day-b.day); }
+function caseSources(id){ return SOURCES.filter(s=>s.case===id); }
+function caseLegal(id){ return LEGAL_MAP.filter(l=>l.case===id); }
+function caseRisk(id){ return RISK_FORMULATIONS.find(r=>r.case===id); }
+function findCase(id){ return CASES.find(c=>c.id===id); }
+function sourceById(id){ return SOURCES.find(s=>s.id===id); }
+function eventById(id){ return EVENTS.find(e=>e.id===id); }
+function escapeHtml(value){ return String(value ?? '').replace(/[&<>'\"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','\"':'&quot;'}[c])); }
+
+/* FIR intake is deliberately transient: the original document/text is read only
+   to create this review draft, then discarded.  No direct identifier is written
+   into CASES, EVENTS, SOURCES, exports, or the page state. */
+let firDraft = null;
+const FIR_EVENT_PATTERNS = [
+  {re:/(?:assault|beat|hit|attack|injur(?:ed|y)|hurt|stab(?:bed)?|struck)[^.\n]{0,180}/ig, code:'V', type:'Alleged violent act', intensity:4},
+  {re:/(?:threat(?:en(?:ed|ing)?)?|intimidat(?:e|ed|ion)|warned)[^.\n]{0,180}/ig, code:'T', type:'Alleged threat or intimidation', intensity:3},
+  {re:/(?:stalk(?:ed|ing)?|follow(?:ed|ing)?|harass(?:ed|ment)?|unwanted contact)[^.\n]{0,180}/ig, code:'U', type:'Alleged unwanted contact / surveillance', intensity:3},
+  {re:/(?:weapon|knife|firearm|gun)[^.\n]{0,180}/ig, code:'A', type:'Alleged weapon/access change', intensity:3},
+  {re:/(?:restrain(?:ed|ing)?|confine(?:d|ment)|prevent(?:ed|ing)?.{0,40}(?:leav|exit))[^.\n]{0,180}/ig, code:'B', type:'Alleged boundary violation', intensity:3}
+];
+function nextFirCaseId(){
+  const n = CASES.filter(c=>/^IN-2026-FIR-\d+$/.test(c.id)).length + 1;
+  return `IN-2026-FIR-${String(n).padStart(3,'0')}`;
+}
+function extractFirDraft(rawText){
+  const text = rawText.replace(/\u0000/g,' ').replace(/\s+/g,' ').trim();
+  const caseId = nextFirCaseId();
+  const dates = [...new Set((text.match(/\b(?:\d{1,2}[\/-]\d{1,2}[\/-]\d{2,4}|\d{1,2}\s+(?:Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)[a-z]*\s+\d{2,4})\b/ig)||[]))].slice(0,3);
+  const statutes = [...new Set((text.match(/\b(?:IPC|BNS|CrPC|BNSS|POCSO|DV Act|Domestic Violence Act)\s*(?:section|sec\.?|s\.?|u\/s)?\s*\d+[A-Za-z]*(?:\s*(?:,|and|\/|r\/w)\s*\d+[A-Za-z]*)*/ig)||[]))].slice(0,8);
+  const partyMatches = [...text.matchAll(/(?:complainant|accused|victim|informant|respondent)\s*(?:[:\-]|is|namely)?\s*([A-Z][a-z]+(?:\s+[A-Z][a-z]+){0,2})/g)];
+  const names = [...new Set(partyMatches.map(m=>m[1]).filter(n=>n.length>2))].slice(0,6);
+  const subjectCodes = names.length ? names.map((_,i)=>`Subject-${caseId.slice(-3)}-${i+1}`) : [`Subject-${caseId.slice(-3)}-1`];
+  const redact = snippet => {
+    let safe = snippet;
+    names.forEach((name,i)=>{ safe = safe.replaceAll(name, subjectCodes[i]); });
+    const tokens = subjectCodes.map((code,i)=>`__CODE_${i}__`);
+    subjectCodes.forEach((code,i)=>{ safe=safe.replaceAll(code,tokens[i]); });
+    safe=safe.replace(/\b(?:Mr|Ms|Mrs|Shri|Smt)\.?\s+[A-Z][a-z]+(?:\s+[A-Z][a-z]+){0,2}\b/g, '[name removed]')
+             .replace(/\b[A-Z]{2,}(?:\s+[A-Z]{2,}){0,3}\b/g, '[name removed]')
+             .replace(/\b[A-Z][a-z]{2,}(?:\s+[A-Z][a-z]{2,})*\b/g, '[name removed]');
+    tokens.forEach((token,i)=>{ safe=safe.replaceAll(token,subjectCodes[i]); });
+    return safe;
+  };
+  const events = [];
+  FIR_EVENT_PATTERNS.forEach(p=>{
+    const match = p.re.exec(text); p.re.lastIndex = 0;
+    if(match) events.push({code:p.code, type:p.type, behaviour:redact(match[0]).slice(0,220), intensity:p.intensity});
+  });
+  if(!events.length && text) events.push({code:'U', type:'Alleged act — coding required', behaviour:'FIR contains narrative requiring researcher coding; no event type was auto-classified.', intensity:1});
+  return {caseId, dates, statutes, subjectCodes, events, extractedAt:new Date().toISOString()};
+}
+async function pdfText(file){
+  if(!window.pdfjsLib){
+    await new Promise((resolve,reject)=>{
+      const s=document.createElement('script'); s.src='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js'; s.onload=resolve; s.onerror=()=>reject(new Error('PDF text reader could not be loaded. Paste the FIR text instead.')); document.head.appendChild(s);
+    });
+  }
+  window.pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  const pdf=await window.pdfjsLib.getDocument({data:await file.arrayBuffer()}).promise;
+  const pages=[]; for(let i=1;i<=pdf.numPages;i++){ const p=await pdf.getPage(i); const c=await p.getTextContent(); pages.push(c.items.map(x=>x.str).join(' ')); }
+  return pages.join('\n');
+}
+async function prepareFirIntake(){
+  const file=document.getElementById('firFile')?.files[0]; const pasted=document.getElementById('firText')?.value.trim(); const status=document.getElementById('firStatus');
+  try{
+    if(!file && !pasted) throw new Error('Choose a .txt or text-based PDF, or paste FIR text.');
+    if(status) status.textContent='Extracting candidate fields locally…';
+    let raw = pasted || (file.type==='application/pdf' || /\.pdf$/i.test(file.name) ? await pdfText(file) : await file.text());
+    firDraft=extractFirDraft(raw); raw='';
+    renderInto();
+  }catch(err){ if(status) status.textContent=err.message; }
+}
+function approveFirIntake(){
+  if(!firDraft) return;
+  const d=firDraft, sourceId=`S-${d.caseId.slice(-3)}-FIR`, baseDay=1;
+  CASES.push({id:d.caseId, pathway:'FIR intake — review pending', jurisdiction:'Not yet coded', offence:'Candidate statutes: '+(d.statutes.join('; ')||'none detected'), relationship:'Not yet coded', ageBand:'Not recorded', sex:'Not recorded', status:'Extracted — events approved; formulation not created', dataAvail:'FIR (local intake; document not retained)', window:d.dates[0]||'Date not extracted', extractedDate:d.dates[0]||'Not extracted', candidateStatutes:d.statutes, subjectCodes:d.subjectCodes});
+  SOURCES.push({id:sourceId, case:d.caseId, type:'FIR', date:d.dates[0]||'Not extracted', provenance:'Researcher-uploaded local document; original not retained', corroboration:0, contradiction:false, admissibility:'Unreviewed extraction — researcher confirmation required', grade:'U'});
+  d.events.forEach((e,i)=>EVENTS.push({id:`E-${d.caseId.slice(-3)}-${i+1}`,case:d.caseId,day:baseDay+i,code:e.code,type:e.type,actor:d.subjectCodes[0],target:d.subjectCodes[1]||'Subject/Group code pending confirmation',location:'Not extracted',channel:'FIR narrative',behaviour:e.behaviour,intensity:e.intensity,specificity:1,opportunity:false,protective:false,source:sourceId,grade:'U',reviewStatus:'unreviewed — pending researcher confirmation'}));
+  state.caseId=d.caseId; firDraft=null; render();
+}
+
+function gradeChip(g){ return `<span class="grade-chip grade-${g}" title="${GRADE_LABEL[g]}">${g}</span>`; }
+function statusTag(s){ return `<span class="status-tag status-${s}">${s}</span>`; }
+
+const TABS = [
+  {id:'intake', label:'01 · Case Intake'},
+  {id:'timeline', label:'02 · Timeline Builder'},
+  {id:'evidence', label:'03 · Evidence Matrix'},
+  {id:'legal', label:'04 · Legal Mapper'},
+  {id:'pathway', label:'05 · Pathway Graph'},
+  {id:'network', label:'06 · Social Context Map'},
+  {id:'protective', label:'07 · Protective Controls'},
+  {id:'scenario', label:'08 · Scenario Formulation'},
+  {id:'reliability', label:'09 · Reliability Lab'},
+  {id:'analytics', label:'10 · Analytics'},
+  {id:'export', label:'11 · Export'},
+];
+
+/* =========================================================================
+   RENDER: CHROME
+   ========================================================================= */
+function renderChrome(){
+  const sel = document.getElementById('caseSelect');
+  sel.innerHTML = CASES.map(c=>`<option value="${c.id}" ${c.id===state.caseId?'selected':''}>${c.id} — ${c.pathway}</option>`).join('');
+  const nav = document.getElementById('tabNav');
+  nav.innerHTML = TABS.map(t=>`<button class="${t.id===state.tab?'active':''}" onclick="setTab('${t.id}')">${t.label}</button>`).join('');
+}
+function onCaseChange(){ state.caseId = document.getElementById('caseSelect').value; render(); }
+function setTab(id){ state.tab = id; render(); }
+
+/* =========================================================================
+   RENDER: TAB — CASE INTAKE
+   ========================================================================= */
+function renderIntake(){
+  const rows = CASES.map(c=>`
+    <tr onclick="state.caseId='${c.id}'; render();" style="cursor:pointer; ${c.id===state.caseId?'background:rgba(46,68,96,0.07);':''}">
+      <td class="mono">${c.id}</td>
+      <td>${c.pathway}</td>
+      <td>${c.jurisdiction}</td>
+      <td>${c.offence}</td>
+      <td>${c.relationship}</td>
+      <td>${c.ageBand} / ${c.sex}</td>
+      <td>${c.status}</td>
+      <td>${c.window}</td>
+    </tr>`).join('');
+
+  const intake = firDraft ? `
+    <div class="card" style="margin-top:22px; border-color:var(--grade-b);">
+      <div class="panel-head"><h3 class="serif" style="margin:0;">Proposed de-identified intake</h3><span class="tag">Review before record creation</span></div>
+      <p class="section-note">Candidate extraction only. Names were used transiently to create codes and are not shown or stored. Confirm each event in the Timeline Builder after creating the record.</p>
+      <div class="grid-3">
+        <div><div class="rk-label">Case ID</div><div class="rk-val mono">${escapeHtml(firDraft.caseId)}</div></div>
+        <div><div class="rk-label">Subject / group codes</div><div class="rk-val mono">${firDraft.subjectCodes.map(escapeHtml).join(', ')}</div></div>
+        <div><div class="rk-label">Candidate date(s)</div><div class="rk-val">${firDraft.dates.map(escapeHtml).join(', ')||'None detected'}</div></div>
+      </div>
+      <div class="field" style="margin-top:14px;"><div class="rk-label">Candidate statute references</div><div class="rk-val">${firDraft.statutes.map(escapeHtml).join('; ')||'None detected — researcher coding required'}</div></div>
+      <div class="field"><div class="rk-label">Candidate alleged acts</div><ul class="muted" style="margin:6px 0 0 18px;">${firDraft.events.map(e=>`<li><b>${escapeHtml(e.type)}</b> — ${escapeHtml(e.behaviour)}</li>`).join('')}</ul></div>
+      <button class="btn" onclick="approveFirIntake()">Create case &amp; retain as unreviewed</button>
+      <button class="btn secondary" style="margin-left:8px;" onclick="firDraft=null; renderInto();">Discard draft</button>
+    </div>` : `
+    <div class="card" style="margin-top:22px;">
+      <div class="panel-head"><h3 class="serif" style="margin:0;">Upload FIR</h3><span class="tag">Step 1 · local, transient extraction</span></div>
+      <p class="muted">Choose a text-based PDF or .txt file, or paste text. Processing happens in this browser; the original file and real names are not retained in the research record. Scanned PDFs require an OCR-readable version or pasted OCR text.</p>
+      <div class="grid-2">
+        <div class="field"><label class="field-label" for="firFile">FIR document</label><input id="firFile" type="file" accept=".txt,text/plain,.pdf,application/pdf"></div>
+        <div class="field"><label class="field-label" for="firText">Or paste FIR text</label><textarea id="firText" rows="3" placeholder="Paste text only if you are authorised to process it."></textarea></div>
+      </div>
+      <button class="btn" onclick="prepareFirIntake()">Extract candidate fields</button><span id="firStatus" class="muted" style="margin-left:10px;"></span>
+      <p class="section-note" style="margin:14px 0 0;">This creates candidates for date, involved-party codes, alleged acts, and statute references. It does not determine facts, guilt, or risk. No RISK_FORMULATIONS scenario is created from this upload; extracted events remain <b>unreviewed — pending researcher confirmation</b> until individually reviewed.</p>
+    </div>`;
+
+  return `
+  <div class="panel">
+    <div class="panel-head">
+      <h2>Case Intake</h2>
+      <span class="tag">Anonymised Case_ID register</span>
+    </div>
+    <p class="section-note">No names, phone numbers, addresses, or other unnecessary identifiers are captured. Each Case_ID is a synthetic research record standing in for a de-identified pathway type from Section 12 of the manual.</p>
+    <div style="overflow-x:auto;">
+    <table>
+      <thead><tr><th>Case_ID</th><th>Pathway type</th><th>Jurisdiction</th><th>Offence category</th><th>Relationship</th><th>Age band / Sex</th><th>Case status</th><th>Observation window</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+    </div>
+    <div class="grid-3" style="margin-top:22px;">
+      <div class="card"><div class="kicker">Cases on file</div><div style="font-family:'Source Serif 4',serif; font-size:28px; font-weight:700; margin-top:4px;">${CASES.length}</div></div>
+      <div class="card"><div class="kicker">Coded events</div><div style="font-family:'Source Serif 4',serif; font-size:28px; font-weight:700; margin-top:4px;">${EVENTS.length}</div></div>
+      <div class="card"><div class="kicker">Sources on file</div><div style="font-family:'Source Serif 4',serif; font-size:28px; font-weight:700; margin-top:4px;">${SOURCES.length}</div></div>
+    </div>
+    ${intake}
+  </div>`;
+}
+
+/* =========================================================================
+   RENDER: TAB — TIMELINE BUILDER
+   ========================================================================= */
+function renderTimeline(){
+  const evs = caseEvents(state.caseId);
+  const maxDay = Math.max(...evs.map(e=>e.day), 1);
+  const minDay = Math.min(...evs.map(e=>e.day), 0);
+  const span = Math.max(maxDay - minDay, 1);
+  const types = [...new Set(evs.map(e=>e.type))];
+
+  const grades = ['A','B','C','D','U'];
+  const gradeToggles = grades.map(g=>`<span class="chip-toggle ${state.tlFilters.grade.has(g)?'on':''}" onclick="toggleGrade('${g}')">${g}</span>`).join(' ');
+
+  const filtered = evs.filter(e=>state.tlFilters.grade.has(e.grade) && e.type.toLowerCase().includes(state.tlFilters.typeQuery.toLowerCase()));
+
+  const dots = filtered.map(e=>{
+    const pct = 4 + ((e.day-minDay)/span)*92;
+    return `
+    <div class="tl-event" style="left:${pct}%;">
+      <div class="tl-label">${e.code} · ${e.type.split('/')[0].split(':')[0]}</div>
+      <div class="tl-dot" style="background:${GRADE_COLOR[e.grade]};" onclick="showEventDetail('${e.id}')" title="${e.type}"></div>
+      <div class="tl-day">Day ${e.day}</div>
+    </div>`;
+  }).join('');
+
+  return `
+  <div class="panel">
+    <div class="panel-head">
+      <h2>Timeline Builder</h2>
+      <span class="tag">${findCase(state.caseId).id} · ${filtered.length}/${evs.length} events shown</span>
+    </div>
+    <p class="section-note">Drag/filter events by time, type, intensity and evidence grade. Click a marker to inspect its full behavioural coding and source link.</p>
+
+    <div class="filter-bar">
+      <div class="filter-group">
+        <label>Evidence-confidence grade</label>
+        <div>${gradeToggles}</div>
+      </div>
+      <div class="filter-group" style="min-width:220px;">
+        <label>Filter by event type</label>
+        <input placeholder="e.g. threat, boundary…" value="${state.tlFilters.typeQuery}" oninput="state.tlFilters.typeQuery=this.value; renderInto();">
+      </div>
+    </div>
+
+    <div class="timeline-wrap">
+      <div class="timeline-track">
+        <div class="timeline-axis"></div>
+        ${dots}
+      </div>
+    </div>
+    <div class="legend-row">
+      ${grades.map(g=>`<span class="sw"><span class="dot" style="background:${GRADE_COLOR[g]}"></span> Grade ${g} — ${GRADE_LABEL[g]}</span>`).join('')}
+    </div>
+    <div id="eventDetail"></div>
+  </div>`;
+}
+function toggleGrade(g){
+  if(state.tlFilters.grade.has(g)) state.tlFilters.grade.delete(g); else state.tlFilters.grade.add(g);
+  renderInto();
+}
+function showEventDetail(id){
+  const e = eventById(id); const src = sourceById(e.source);
+  const el = document.getElementById('eventDetail');
+  if(!el) return;
+  el.innerHTML = `
+    <div class="card detail-card">
+      <div class="kicker">${e.id} · Day ${e.day} · Code ${e.code}</div>
+      <h3 class="serif" style="margin:6px 0 8px 0; font-size:16px;">${e.type}</h3>
+      <p class="muted">${e.behaviour}</p>
+      <div class="grid-3" style="margin-top:10px;">
+        <div><div class="rk-label">Actor → Target</div><div class="rk-val mono">${e.actor} → ${e.target}</div></div>
+        <div><div class="rk-label">Location / channel</div><div class="rk-val">${e.location} · ${e.channel}</div></div>
+        <div><div class="rk-label">Intensity / specificity</div><div class="rk-val">${e.intensity}/5 · ${e.specificity}/5</div></div>
+      </div>
+      <div style="margin-top:10px; display:flex; align-items:center; gap:10px;">
+        ${gradeChip(e.grade)} <span class="muted">Source ${src.id} — ${src.type}, ${src.provenance}${src.contradiction?' (contested)':''}</span>
+      </div>
+      ${e.reviewStatus?`<p class="section-note" style="margin:12px 0 0;">${escapeHtml(e.reviewStatus)}</p>`:''}
+      ${e.reviewStatus==='unreviewed — pending researcher confirmation'?`<button class="btn" style="margin-top:10px;" onclick="approveExtractedEvent('${e.id}')">Mark event reviewed &amp; approved</button>`:''}
+    </div>`;
+}
+function approveExtractedEvent(id){
+  const e=eventById(id); if(!e || e.reviewStatus!=='unreviewed — pending researcher confirmation') return;
+  e.reviewStatus='researcher reviewed and approved';
+  renderInto();
+}
+
+/* =========================================================================
+   RENDER: TAB — EVIDENCE MATRIX
+   ========================================================================= */
+function renderEvidence(){
+  const srcs = caseSources(state.caseId);
+  const rows = srcs.map(s=>`
+    <tr>
+      <td class="mono">${s.id}</td>
+      <td>${s.type}</td>
+      <td>${s.date}</td>
+      <td>${s.provenance}</td>
+      <td>${s.corroboration}</td>
+      <td>${s.contradiction?'<span class="status-tag status-charge">contested</span>':'<span class="muted">none flagged</span>'}</td>
+      <td>${s.admissibility}</td>
+      <td>${gradeChip(s.grade)}</td>
+    </tr>`).join('');
+
+  return `
+  <div class="panel">
+    <div class="panel-head">
+      <h2>Evidence Matrix</h2>
+      <span class="tag">Source provenance, corroboration &amp; contradiction</span>
+    </div>
+    <p class="section-note">A single unverified source is never given the same analytical weight as a corroborated record. Contradictions are preserved and displayed — not resolved by intuition.</p>
+    <div style="overflow-x:auto;">
+    <table>
+      <thead><tr><th>Source_ID</th><th>Type</th><th>Date</th><th>Provenance</th><th>Corroboration count</th><th>Contradiction</th><th>Admissibility flag</th><th>Confidence grade</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+    </div>
+  </div>`;
+}
+
+/* =========================================================================
+   RENDER: TAB — LEGAL MAPPER
+   ========================================================================= */
+function renderLegal(){
+  const rows = caseLegal(state.caseId).map(l=>`
+    <tr>
+      <td class="mono">${l.event}</td>
+      <td>${l.statute}<br><span class="muted">${l.section}</span></td>
+      <td>${l.element}</td>
+      <td class="muted">${l.support}</td>
+      <td class="muted">${l.contradiction}</td>
+      <td>${statusTag(l.status)}</td>
+    </tr>`).join('') || `<tr><td colspan="6" class="muted">No candidate legal mapping recorded for this case yet.</td></tr>`;
+
+  return `
+  <div class="panel">
+    <div class="panel-head">
+      <h2>Legal Mapper</h2>
+      <span class="tag">BNS / BNSS / BSA / special-law candidate mapping</span>
+    </div>
+    <p class="section-note"><b>Legal rule:</b> a behavioural variable may support an investigative or research hypothesis, but statutory ingredients, admissibility, burden of proof and judicial findings remain legal questions. Behavioural inference and legal status are always shown in separate columns — never merged into one field.</p>
+    <div style="overflow-x:auto;">
+    <table>
+      <thead><tr><th>Event</th><th>Candidate statute / section</th><th>Observable element</th><th>Supporting fact</th><th>Contradictory fact</th><th>Legal status</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+    </div>
+    <p class="muted" style="margin-top:14px;">Status vocabulary is kept strictly separated: <span class="status-tag status-allegation">allegation</span> <span class="status-tag status-investigation">investigation</span> <span class="status-tag status-charge">charge</span> <span class="status-tag status-finding">finding</span> <span class="status-tag status-conviction">conviction</span>. Statute text must be checked against the current bare Act before any final submission; version/date used should be recorded separately.</p>
+  </div>`;
+}
+
+/* =========================================================================
+   RENDER: TAB — PATHWAY GRAPH
+   ========================================================================= */
+function renderPathway(){
+  const evs = caseEvents(state.caseId);
+  const nodes = evs.map((e,i)=>`
+    <div class="pf-node">
+      <div class="pf-badge" style="background:${GRADE_COLOR[e.grade]};">${e.code}</div>
+      <div class="pf-title">${e.type.split('/')[0].split(':')[0]}</div>
+      <div class="pf-sub">Day ${e.day} · ${e.intensity}/5 intensity</div>
+    </div>
+    ${i<evs.length-1?'<div class="pf-arrow"></div>':''}`).join('');
+
+  // simple transition frequency table for this case
+  const trans = {};
+  for(let i=0;i<evs.length-1;i++){
+    const key = evs[i].code+'→'+evs[i+1].code;
+    trans[key] = (trans[key]||0)+1;
+  }
+  const transRows = Object.entries(trans).map(([k,v])=>`<tr><td class="mono">${k}</td><td>${v}</td></tr>`).join('');
+
+  return `
+  <div class="panel">
+    <div class="panel-head">
+      <h2>Pathway Graph</h2>
+      <span class="tag">Event transition sequence</span>
+    </div>
+    <p class="section-note">Visualises escalation and de-escalation nodes in observed order. Colour encodes evidence-confidence grade, not severity — a high-severity event coded on weak evidence is flagged, not amplified.</p>
+    <div class="pathway-flow">${nodes}</div>
+    <div class="grid-2" style="margin-top:20px;">
+      <div class="card">
+        <div class="kicker">Observed transition frequencies (this case)</div>
+        <table style="margin-top:8px;"><thead><tr><th>Transition</th><th>Count</th></tr></thead><tbody>${transRows}</tbody></table>
+      </div>
+      <div class="card">
+        <div class="kicker">Reading the graph</div>
+        <p class="muted">Each node is one coded EVENT. The sequence is time-ordered, not causally asserted beyond adjacency — the Legal Mapper and Scenario Formulation tabs carry the interpretive claims, sourced back to specific events.</p>
+      </div>
+    </div>
+  </div>`;
+}
+
+/* =========================================================================
+   RENDER: TAB — SOCIAL CONTEXT MAP
+   ========================================================================= */
+function renderNetwork(){
+  const evs = caseEvents(state.caseId);
+  const actors = [...new Set(evs.flatMap(e=>[e.actor,e.target]).filter(a=>a && a!=='—'))];
+  const cx=340, cy=210, r=150;
+  const positions = {};
+  actors.forEach((a,i)=>{
+    const angle = (i/actors.length)*2*Math.PI - Math.PI/2;
+    positions[a] = {x:cx+r*Math.cos(angle), y:cy+r*Math.sin(angle)};
+  });
+  const links = [...new Set(evs.filter(e=>e.target && e.target!=='—').map(e=>e.actor+'|'+e.target))];
+  const lines = links.map(l=>{
+    const [a,b] = l.split('|');
+    if(!positions[a]||!positions[b]) return '';
+    return `<line x1="${positions[a].x}" y1="${positions[a].y}" x2="${positions[b].x}" y2="${positions[b].y}" stroke="#B9AF97" stroke-width="1.5" />`;
+  }).join('');
+  const circles = actors.map(a=>{
+    const p = positions[a];
+    const isGroup = a.toLowerCase().includes('group');
+    return `
+      <circle cx="${p.x}" cy="${p.y}" r="26" fill="${isGroup?'var(--accent)':'#fff'}" stroke="var(--accent)" stroke-width="2"/>
+      <text x="${p.x}" y="${p.y+4}" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9" fill="${isGroup?'#fff':'var(--accent)'}">${a.split('-')[0].slice(0,4)}</text>
+      <text x="${p.x}" y="${p.y+40}" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9.5" fill="#6B6252">${a}</text>
+    `;
+  }).join('');
+
+  return `
+  <div class="panel">
+    <div class="panel-head">
+      <h2>Social Context Map</h2>
+      <span class="tag">Pseudonymous relationship / network graph</span>
+    </div>
+    <p class="section-note">Relationship, proximity and co-actor structure for the selected case, using pseudonymous node labels only — no names, addresses or contact details.</p>
+    <div class="net-wrap">
+      <svg width="680" height="420" viewBox="0 0 680 420">
+        ${lines}
+        ${circles}
+      </svg>
+    </div>
+  </div>`;
+}
+
+/* =========================================================================
+   RENDER: TAB — PROTECTIVE CONTROLS
+   ========================================================================= */
+function renderProtective(){
+  const evs = caseEvents(state.caseId).filter(e=>e.protective);
+  const rows = evs.map(e=>`
+    <tr>
+      <td class="mono">Day ${e.day}</td>
+      <td>${e.type}</td>
+      <td>${e.behaviour}</td>
+      <td>${e.actor}</td>
+      <td>${gradeChip(e.grade)}</td>
+    </tr>`).join('') || `<tr><td colspan="5" class="muted">No verified protective/control events coded for this case.</td></tr>`;
+
+  const risk = caseRisk(state.caseId);
+
+  return `
+  <div class="panel">
+    <div class="panel-head">
+      <h2>Protective Controls</h2>
+      <span class="tag">Supervision, treatment/support, stabilising events</span>
+    </div>
+    <p class="section-note">Protective and control conditions are treated as independent, testable pathway interrupters — not as an automatic offset against risk indicators.</p>
+    <div style="overflow-x:auto;">
+    <table>
+      <thead><tr><th>Day</th><th>Event type</th><th>Behaviour</th><th>Actor</th><th>Evidence grade</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+    </div>
+    ${risk?`<div class="card" style="margin-top:18px;"><div class="kicker">Recorded protective / control conditions (case narrative)</div><p class="muted" style="margin-top:6px;">${risk.protective}</p></div>`:''}
+  </div>`;
+}
+
+/* =========================================================================
+   RENDER: TAB — SCENARIO FORMULATION
+   ========================================================================= */
+function renderScenario(){
+  const r = caseRisk(state.caseId);
+  if(!r){
+    const pending=caseEvents(state.caseId).some(e=>e.reviewStatus==='unreviewed — pending researcher confirmation');
+    return `<div class="panel"><div class="panel-head"><h2>Scenario Formulation</h2></div><p class="section-note">${pending?'Blocked: this FIR intake contains extracted events marked unreviewed — pending researcher confirmation. A researcher must review and approve the extracted events before any scenario can be recorded.':'No formulation recorded.'}</p></div>`;
+  }
+
+  const fields = [
+    ['Observed pathway', r.pathway],
+    ['Current dynamic concerns', r.dynamic],
+    ['Protective / control conditions', r.protective],
+    ['Scenario 1', r.scenario1],
+    ['Scenario 2', r.scenario2],
+    ['Warning indicators', r.warning],
+    ['Management priorities', r.management],
+    ['Evidence confidence', r.confidence],
+  ];
+
+  return `
+  <div class="panel">
+    <div class="panel-head">
+      <h2>Structured Risk Formulation</h2>
+      <span class="tag">No single danger score — Section 13 field structure</span>
+    </div>
+    <p class="section-note">Every field is stated conditionally and traced to coded events and evidence grade. Legal status is tracked separately in the Legal Mapper tab and is not merged into this narrative.</p>
+    <div class="grid-2">
+      ${fields.map(([label,val])=>`
+        <div class="risk-field card">
+          <div class="rk-label">${label}</div>
+          <div class="rk-val">${val}</div>
+        </div>`).join('')}
+    </div>
+    <div class="card" style="margin-top:18px; border-color:var(--grade-d);">
+      <div class="kicker" style="color:var(--grade-d);">Limitations</div>
+      <p class="muted" style="margin-top:6px;">Synthetic single-case illustration; not externally validated; not a population-transferable probability estimate; scope limited to the coded observation window (${findCase(state.caseId).window}).</p>
+    </div>
+  </div>`;
+}
+
+/* =========================================================================
+   RENDER: TAB — RELIABILITY LAB
+   ========================================================================= */
+function cohenKappa(rows){
+  const n = rows.length;
+  let po = 0;
+  const catCounts = {Y:{A:0,B:0},N:{A:0,B:0}};
+  rows.forEach(r=>{
+    if(r.coderA===r.coderB) po++;
+    catCounts.Y.A += r.coderA==='Y'?1:0;
+    catCounts.N.A += r.coderA==='N'?1:0;
+    catCounts.Y.B += r.coderB==='Y'?1:0;
+    catCounts.N.B += r.coderB==='N'?1:0;
+  });
+  po = po/n;
+  const pYes = (catCounts.Y.A/n)*(catCounts.Y.B/n);
+  const pNo = (catCounts.N.A/n)*(catCounts.N.B/n);
+  const pe = pYes + pNo;
+  const kappa = pe===1 ? 1 : (po-pe)/(1-pe);
+  return {po, pe, kappa, n};
+}
+
+function renderReliability(){
+  const {po, pe, kappa, n} = cohenKappa(RELIABILITY);
+  const rows = RELIABILITY.map(r=>{
+    const agree = r.coderA===r.coderB;
+    return `<tr>
+      <td class="mono">${r.event}</td>
+      <td class="mono">${r.case}</td>
+      <td>${r.coderA}</td>
+      <td>${r.coderB}</td>
+      <td class="${agree?'agree-y':'agree-n'}">${agree?'Agree':'Disagree'}</td>
+    </tr>`;
+  }).join('');
+
+  let interp = 'slight';
+  if(kappa>0.8) interp='almost perfect';
+  else if(kappa>0.6) interp='substantial';
+  else if(kappa>0.4) interp='moderate';
+  else if(kappa>0.2) interp='fair';
+
+  return `
+  <div class="panel">
+    <div class="panel-head">
+      <h2>Reliability Lab</h2>
+      <span class="tag">Coder A vs Coder B · "Escalation indicator present" (Y/N)</span>
+    </div>
+    <p class="section-note">Double-coding is applied to at least 20% of events across the case sample (${n} of ${EVENTS.length} = ${Math.round(n/EVENTS.length*100)}%), independent of the currently selected case. Codebook ambiguities are adjudicated without changing the underlying facts.</p>
+    <div class="kappa-box">
+      <div>
+        <div class="kappa-num">${kappa.toFixed(2)}</div>
+        <div class="kappa-label">Cohen's κ</div>
+      </div>
+      <div>
+        <div class="kappa-num" style="font-size:22px;">${(po*100).toFixed(0)}%</div>
+        <div class="kappa-label">Observed agreement</div>
+      </div>
+      <div>
+        <div class="kappa-num" style="font-size:22px;">${(pe*100).toFixed(0)}%</div>
+        <div class="kappa-label">Expected chance agreement</div>
+      </div>
+      <div class="pill">Interpretation: ${interp} agreement</div>
+    </div>
+    <div style="overflow-x:auto;">
+    <table>
+      <thead><tr><th>Event</th><th>Case</th><th>Coder A</th><th>Coder B</th><th>Result</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+    </div>
+    <p class="muted" style="margin-top:12px;">Report kappa/agreement honestly and revise the codebook where it is weak, rather than hiding disagreement (Section 14).</p>
+  </div>`;
+}
+
+/* =========================================================================
+   RENDER: TAB — ANALYTICS
+   ========================================================================= */
+function renderAnalytics(){
+  const evs = caseEvents(state.caseId);
+  const srcs = caseSources(state.caseId);
+
+  // Evidence Coverage Ratio: A/B graded events ÷ all coded events
+  const verified = evs.filter(e=>e.grade==='A'||e.grade==='B').length;
+  const ecr = evs.length? (verified/evs.length) : 0;
+
+  // Escalation Velocity: change in mean intensity, first half vs second half
+  const half = Math.ceil(evs.length/2);
+  const early = evs.slice(0,half), late = evs.slice(half);
+  const mean = arr => arr.length? arr.reduce((s,e)=>s+e.intensity,0)/arr.length : 0;
+  const ev = mean(late) - mean(early);
+
+  // Threat Specificity Delta: change in specificity, first vs last event with specificity>0
+  const specVals = evs.map(e=>e.specificity);
+  const tsd = specVals.length>1 ? specVals[specVals.length-1]-specVals[0] : 0;
+
+  // Boundary-Crossing Density
+  const bcd = evs.filter(e=>e.type.toLowerCase().includes('boundary')).length;
+
+  // Opportunity Convergence: count of events flagged opportunity=true
+  const oc = evs.filter(e=>e.opportunity).length;
+
+  // Protective Interruption Rate
+  const pir = evs.length? (evs.filter(e=>e.protective).length/evs.length) : 0;
+
+  // Case-level transition matrix across full corpus (all cases) by code
+  const codes = [...new Set(EVENTS.map(e=>e.code))];
+  const matrix = {};
+  codes.forEach(c1=>{ matrix[c1]={}; codes.forEach(c2=>matrix[c1][c2]=0); });
+  Object.values(EVENTS.reduce((acc,e)=>{ (acc[e.case]=acc[e.case]||[]).push(e); return acc; },{}))
+    .forEach(list=>{
+      list.sort((a,b)=>a.day-b.day);
+      for(let i=0;i<list.length-1;i++){ matrix[list[i].code][list[i+1].code]++; }
+    });
+
+  const matrixHeader = codes.map(c=>`<th>${c}</th>`).join('');
+  const matrixRows = codes.map(c1=>`<tr><th>${c1}</th>${codes.map(c2=>`<td class="${c1===c2?'diag':''}">${matrix[c1][c2]||''}</td>`).join('')}</tr>`).join('');
+
+  return `
+  <div class="panel">
+    <div class="panel-head">
+      <h2>Analytics</h2>
+      <span class="tag">${findCase(state.caseId).id} · descriptive research variables, not predictive probabilities</span>
+    </div>
+    <div class="grid-3" style="margin-bottom:20px;">
+      <div class="metric-card"><div class="mv">${(ecr*100).toFixed(0)}%</div><div class="ml">Evidence coverage ratio</div></div>
+      <div class="metric-card"><div class="mv">${ev>=0?'+':''}${ev.toFixed(1)}</div><div class="ml">Escalation velocity (Δ mean intensity)</div></div>
+      <div class="metric-card"><div class="mv">${tsd>=0?'+':''}${tsd}</div><div class="ml">Threat specificity delta</div></div>
+      <div class="metric-card"><div class="mv">${bcd}</div><div class="ml">Boundary-crossing density</div></div>
+      <div class="metric-card"><div class="mv">${oc}</div><div class="ml">Opportunity convergence events</div></div>
+      <div class="metric-card"><div class="mv">${(pir*100).toFixed(0)}%</div><div class="ml">Protective interruption rate</div></div>
+    </div>
+    <div class="card">
+      <div class="kicker">Corpus-wide event transition matrix (all ${CASES.length} cases, by event code)</div>
+      <div style="overflow-x:auto; margin-top:10px;">
+      <table class="matrix-table"><thead><tr><th></th>${matrixHeader}</tr></thead><tbody>${matrixRows}</tbody></table>
+      </div>
+    </div>
+    <p class="muted" style="margin-top:14px;">These are descriptive research variables. They are not validated probabilities of future violence and must not be presented as a diagnosis, bail recommendation, sentencing score or watch-list threshold (Section 8).</p>
+  </div>`;
+}
+
+/* =========================================================================
+   RENDER: TAB — EXPORT
+   ========================================================================= */
+function downloadBlob(filename, content, type){
+  const blob = new Blob([content], {type});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename; document.body.appendChild(a); a.click();
+  document.body.removeChild(a); URL.revokeObjectURL(url);
+}
+function toCSV(rows){
+  if(!rows.length) return '';
+  const cols = Object.keys(rows[0]);
+  const esc = v => `"${String(v).replace(/"/g,'""')}"`;
+  return [cols.join(','), ...rows.map(r=>cols.map(c=>esc(r[c])).join(','))].join('\n');
+}
+function exportJSON(){
+  downloadBlob('pathlens_deidentified_export.json', JSON.stringify({CASES,EVENTS,SOURCES,LEGAL_MAP,RISK_FORMULATIONS}, null, 2), 'application/json');
+}
+function exportCasesCSV(){ downloadBlob('cases.csv', toCSV(CASES), 'text/csv'); }
+function exportEventsCSV(){ downloadBlob('events.csv', toCSV(EVENTS.map(({...e})=>({...e})) ), 'text/csv'); }
+function exportSourcesCSV(){ downloadBlob('sources.csv', toCSV(SOURCES), 'text/csv'); }
+function exportLegalCSV(){ downloadBlob('legal_map.csv', toCSV(LEGAL_MAP), 'text/csv'); }
+
+function renderExport(){
+  return `
+  <div class="panel">
+    <div class="panel-head">
+      <h2>Export</h2>
+      <span class="tag">De-identified dataset + research summary</span>
+    </div>
+    <p class="section-note">Export produces de-identified data only. No direct identifiers (names, phone numbers, addresses) exist anywhere in this dataset — every actor/target field uses a pseudonymous Subject/Group code.</p>
+    <div class="grid-3">
+      <div class="card">
+        <div class="kicker">Full dataset (JSON)</div>
+        <p class="muted">CASE + EVENT + SOURCE + LEGAL_MAP + RISK_FORMULATION tables in one file.</p>
+        <button class="btn" onclick="exportJSON()">Download JSON</button>
+      </div>
+      <div class="card">
+        <div class="kicker">Table exports (CSV)</div>
+        <p class="muted">Individual tables for spreadsheet / stats-package import.</p>
+        <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:8px;">
+          <button class="btn secondary" onclick="exportCasesCSV()">CASE.csv</button>
+          <button class="btn secondary" onclick="exportEventsCSV()">EVENT.csv</button>
+          <button class="btn secondary" onclick="exportSourcesCSV()">SOURCE.csv</button>
+          <button class="btn secondary" onclick="exportLegalCSV()">LEGAL_MAP.csv</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="kicker">Audit trail</div>
+        <p class="muted">In a full deployment, every export is logged with timestamp, exporting researcher and record count. This prototype demonstrates the export function; persistent audit logging is a backend concern noted in Section 15.</p>
+      </div>
+    </div>
+  </div>`;
+}
+
+/* =========================================================================
+   MAIN RENDER
+   ========================================================================= */
+function renderTabContent(){
+  switch(state.tab){
+    case 'intake': return renderIntake();
+    case 'timeline': return renderTimeline();
+    case 'evidence': return renderEvidence();
+    case 'legal': return renderLegal();
+    case 'pathway': return renderPathway();
+    case 'network': return renderNetwork();
+    case 'protective': return renderProtective();
+    case 'scenario': return renderScenario();
+    case 'reliability': return renderReliability();
+    case 'analytics': return renderAnalytics();
+    case 'export': return renderExport();
+    default: return '';
+  }
+}
+function renderInto(){ document.getElementById('app').innerHTML = renderTabContent(); }
+function render(){ renderChrome(); renderInto(); }
+render();
+</script>
+</body>
+</html>
