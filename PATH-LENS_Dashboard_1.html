@@ -5,212 +5,223 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PATH-LENS — VIOLENCE-PATH India Research Dashboard</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:opsz,wght@9..144,700;9..144,800;9..144,900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:#1E2A38;
-    --ink-2:#26374A;
-    --paper:#FCFBF8;
-    --paper-2:#F1EEE6;
-    --line:#E4E0D5;
-    --line-strong:#CFC8B4;
-    --accent:#3A5A82;
-    --accent-soft:#EAF0F6;
-    --accent-2:#B07A3E;
-    --text:#242018;
-    --text-muted:#7A7264;
-    --grade-a:#2F7A78;
-    --grade-b:#3E6690;
-    --grade-c:#C08A3E;
-    --grade-d:#B14F41;
-    --grade-u:#9B9384;
-    --ok:#2F8058;
-    --radius-lg:14px;
-    --radius-md:10px;
-    --radius-sm:8px;
+    --ink:#1A1A1A;
+    --ink-2:#1A1A1A;
+    --paper:#F0F0E6;
+    --paper-2:#D9F45C;
+    --line:#1A1A1A;
+    --line-strong:#1A1A1A;
+    --accent:#A8C97F;
+    --accent-hover:#92B56B;
+    --accent-soft:#E1F4B5;
+    --accent-2:#1A1A1A;
+    --text:#1A1A1A;
+    --text-muted:#1A1A1A;
+    --grade-a:#6FAE63;
+    --grade-b:#6B9E62;
+    --grade-c:#F3C844;
+    --grade-d:#F26A3D;
+    --grade-u:#7A8E63;
+    --ok:#356C3B;
+    --radius-lg:30px;
+    --radius-md:24px;
+    --radius-sm:18px;
+    --font-display:'Fraunces',Georgia,serif;
+    --font-text:'Inter',Arial,sans-serif;
+    --font-mono:'DM Mono','Courier New',monospace;
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
   body{
-    background:var(--ink);
-    font-family:'Inter',sans-serif;
+    background:var(--paper-2);
+    font-family:var(--font-text);
     font-size:15px;
     color:var(--text);
     -webkit-font-smoothing:antialiased;
-    line-height:1.5;
+    line-height:1.53;
   }
-  .mono{font-family:'JetBrains Mono','IBM Plex Mono',monospace;}
-  .serif{font-family:'Sora',sans-serif;}
+  .mono{font-family:var(--font-mono);}
+  .serif{font-family:var(--font-display);}
 
   /* ---------- Chrome ---------- */
   header.chrome{
-    background:linear-gradient(180deg,var(--ink) 0%, var(--ink-2) 100%);
-    color:#F2EFE6;
-    padding:24px 32px 0 32px;
-    border-bottom:1px solid rgba(0,0,0,0.25);
+    background:rgba(29,29,31,0.78);
+    backdrop-filter:blur(20px) saturate(180%);
+    -webkit-backdrop-filter:blur(20px) saturate(180%);
+    color:#F5F5F7;
+    padding:18px 32px 0 32px;
+    position:sticky; top:0; z-index:20;
   }
   .chrome-top{
     display:flex; align-items:center; justify-content:space-between; gap:24px;
     flex-wrap:wrap;
-    padding-bottom:18px;
+    padding-bottom:16px;
   }
-  .brand{display:flex; align-items:center; gap:14px;}
+  .brand{display:flex; align-items:center; gap:13px;}
   .brand .mark{
-    width:40px;height:40px;background:rgba(255,255,255,0.08);border:1.5px solid rgba(255,255,255,0.35);border-radius:50%;
+    width:38px;height:38px;background:rgba(255,255,255,0.12);border:none;border-radius:11px;
     display:flex;align-items:center;justify-content:center;
-    font-family:'Sora',sans-serif; font-weight:700; font-size:15px; color:#F2EFE6;
+    font-family:var(--font-display); font-weight:700; font-size:14px; color:#F5F5F7;
     flex:0 0 auto;
   }
   .brand h1{
-    font-family:'Sora',sans-serif; font-weight:700; font-size:24px; letter-spacing:0.2px; margin:0;
+    font-family:var(--font-display); font-weight:600; font-size:21px; letter-spacing:-0.3px; margin:0;
   }
   .brand .sub{
-    font-family:'Inter',sans-serif; font-weight:500; font-size:12px; color:#B7AF9A; letter-spacing:0.2px; margin-top:3px;
+    font-family:var(--font-text); font-weight:500; font-size:11.5px; color:rgba(245,245,247,0.55); letter-spacing:0.2px; margin-top:2px;
   }
   .case-select-wrap{display:flex; flex-direction:column; gap:6px; min-width:280px;}
-  .case-select-wrap label{font-family:'Inter',sans-serif; font-weight:600; font-size:11px; color:#B7AF9A; letter-spacing:0.6px; text-transform:uppercase;}
+  .case-select-wrap label{font-family:var(--font-text); font-weight:600; font-size:11px; color:rgba(245,245,247,0.5); letter-spacing:0.5px; text-transform:uppercase;}
   select#caseSelect{
-    background:rgba(255,255,255,0.06); color:#F2EFE6; border:1px solid rgba(255,255,255,0.22); border-radius:var(--radius-sm);
-    padding:10px 12px; font-family:'Inter',sans-serif; font-weight:500; font-size:13.5px; min-width:280px;
-    cursor:pointer;
+    background:rgba(255,255,255,0.1); color:#F5F5F7; border:none; border-radius:980px;
+    padding:9px 16px; font-family:var(--font-text); font-weight:500; font-size:13.5px; min-width:280px;
+    cursor:pointer; appearance:none; -webkit-appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23F5F5F7' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+    background-repeat:no-repeat; background-position:right 14px center; background-size:14px;
   }
-  select#caseSelect:hover{border-color:rgba(255,255,255,0.4);}
+  select#caseSelect:hover{background-color:rgba(255,255,255,0.16);}
   select#caseSelect option{
-    background:var(--paper); color:var(--text); font-family:'Inter',sans-serif; font-weight:500;
+    background:var(--paper); color:var(--text); font-family:var(--font-text); font-weight:500;
     padding:8px 10px;
   }
   select#caseSelect option:checked, select#caseSelect option:hover{
     background:var(--accent-soft); color:var(--ink);
   }
   nav.tabs{
-    display:flex; gap:6px; overflow-x:auto; padding:6px 0 14px 0; flex-wrap:wrap;
+    display:flex; gap:2px; overflow-x:auto; padding:4px; margin-bottom:14px; flex-wrap:wrap;
+    background:rgba(255,255,255,0.07); border-radius:980px; width:fit-content;
   }
   nav.tabs button{
-    background:transparent; border:1px solid transparent; border-radius:999px;
-    color:#B7AF9A; padding:8px 15px; font-family:'Inter',sans-serif; font-weight:600; font-size:12.5px;
-    letter-spacing:0.1px; cursor:pointer; white-space:nowrap; transition:all .15s ease;
+    background:transparent; border:none; border-radius:980px;
+    color:rgba(245,245,247,0.62); padding:8px 16px; font-family:var(--font-text); font-weight:590; font-size:12.5px;
+    letter-spacing:0.1px; cursor:pointer; white-space:nowrap; transition:all .18s ease;
   }
-  nav.tabs button:hover{color:#F2EFE6; background:rgba(255,255,255,0.06);}
-  nav.tabs button.active{color:#1E2A38; background:#E7B979; border-color:#E7B979; font-weight:700;}
+  nav.tabs button:hover{color:#F5F5F7;}
+  nav.tabs button.active{color:#1D1D1F; background:#F5F5F7; font-weight:600;}
 
   .boundary{
-    background:#3A2F1D; border-top:1px solid rgba(0,0,0,0.2); color:#E7DAB8;
-    font-family:'Inter',sans-serif; font-size:12.5px; padding:10px 32px; letter-spacing:0.1px; line-height:1.5;
+    background:rgba(229,138,0,0.1); border-top:1px solid rgba(0,0,0,0.06); color:#8A5200;
+    font-family:var(--font-text); font-size:12.5px; padding:11px 32px; letter-spacing:0.1px; line-height:1.5;
   }
-  .boundary b{color:#F3E4BC;}
+  .boundary b{color:#6E3E00;}
 
   /* ---------- Layout ---------- */
   main{
-    max-width:1280px; margin:0 auto; padding:30px 32px 80px 32px;
+    max-width:1280px; margin:0 auto; padding:32px 32px 90px 32px;
   }
   .panel{
     background:var(--paper);
     border:1px solid var(--line);
     border-radius:var(--radius-lg);
-    box-shadow:0 20px 40px -24px rgba(0,0,0,0.45);
-    padding:30px 32px;
+    box-shadow:0 1px 2px rgba(0,0,0,0.04), 0 12px 32px -12px rgba(0,0,0,0.08);
+    padding:32px 34px;
     position:relative;
   }
   .panel-head{
     display:flex; justify-content:space-between; align-items:baseline; gap:16px;
-    border-bottom:1px solid var(--line); padding-bottom:16px; margin-bottom:20px;
+    border-bottom:1px solid var(--line); padding-bottom:18px; margin-bottom:22px;
     flex-wrap:wrap;
   }
-  .panel-head h2{font-family:'Sora',sans-serif; font-size:22px; margin:0; font-weight:700; color:var(--ink);}
+  .panel-head h2{font-family:var(--font-display); font-size:22px; margin:0; font-weight:600; letter-spacing:-0.3px; color:var(--ink);}
   .panel-head .tag{
-    font-family:'Inter',sans-serif; font-weight:600; font-size:11.5px; color:var(--text-muted);
-    letter-spacing:0.3px; background:var(--paper-2); padding:5px 10px; border-radius:999px;
+    font-family:var(--font-text); font-weight:590; font-size:11.5px; color:var(--text-muted);
+    letter-spacing:0.2px; background:var(--paper-2); padding:6px 12px; border-radius:980px;
   }
-  .grid-2{display:grid; grid-template-columns:1fr 1fr; gap:18px;}
-  .grid-3{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
-  @media(max-width:900px){.grid-2,.grid-3{grid-template-columns:1fr;} main{padding:20px 16px 60px 16px;} .panel{padding:22px 18px;} header.chrome{padding:18px 18px 0 18px;} .boundary{padding:10px 18px;}}
+  .grid-2{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  .grid-3{display:grid; grid-template-columns:repeat(3,1fr); gap:14px;}
+  @media(max-width:900px){.grid-2,.grid-3{grid-template-columns:1fr;} main{padding:20px 16px 60px 16px;} .panel{padding:22px 20px;} header.chrome{padding:16px 18px 0 18px;} .boundary{padding:10px 18px;}}
 
   table{width:100%; border-collapse:collapse; font-size:13.5px;}
   th{
-    text-align:left; font-family:'Inter',sans-serif; font-size:11px; font-weight:700; letter-spacing:0.3px;
-    color:var(--text-muted); border-bottom:2px solid var(--line-strong);
-    padding:10px 12px; background:var(--paper-2);
+    text-align:left; font-family:var(--font-text); font-size:11px; font-weight:600; letter-spacing:0.3px;
+    color:var(--text-muted); border-bottom:1px solid var(--line-strong);
+    padding:11px 12px; background:transparent; text-transform:uppercase;
   }
   th:first-child{border-top-left-radius:var(--radius-sm);}
   th:last-child{border-top-right-radius:var(--radius-sm);}
-  td{padding:11px 12px; border-bottom:1px solid var(--line); vertical-align:top;}
-  tbody tr:nth-child(even) td{background:rgba(58,90,130,0.03);}
+  td{padding:12px 12px; border-bottom:1px solid var(--line); vertical-align:top;}
+  tbody tr:nth-child(even) td{background:rgba(0,0,0,0.015);}
   tbody tr:hover td{background:var(--accent-soft);}
 
   .grade-chip{
     display:inline-flex; align-items:center; justify-content:center;
-    width:26px;height:26px;border-radius:50%;
-    font-family:'JetBrains Mono','IBM Plex Mono',monospace; font-weight:700; font-size:11.5px; color:#fff;
-    border:2px solid #fff; box-shadow:0 1px 3px rgba(0,0,0,0.2);
+    width:25px;height:25px;border-radius:50%;
+    font-family:var(--font-mono); font-weight:700; font-size:11px; color:#fff;
+    border:2px solid #fff; box-shadow:0 1px 3px rgba(0,0,0,0.15);
   }
   .grade-A{background:var(--grade-a);} .grade-B{background:var(--grade-b);}
   .grade-C{background:var(--grade-c);} .grade-D{background:var(--grade-d);}
   .grade-U{background:var(--grade-u);}
 
   .status-tag{
-    font-family:'Inter',sans-serif; font-size:11px; font-weight:700; letter-spacing:0.2px; text-transform:capitalize;
-    padding:4px 11px; border-radius:999px; border:1px solid; display:inline-block;
+    font-family:var(--font-text); font-size:11px; font-weight:600; letter-spacing:0.1px; text-transform:capitalize;
+    padding:4px 12px; border-radius:980px; border:none; display:inline-block;
   }
-  .status-allegation{color:#93672E; border-color:#D8B778; background:#FBF1DD;}
-  .status-investigation{color:#2F5178; border-color:#9FB9D4; background:#E9F0F7;}
-  .status-charge{color:#A1443A; border-color:#E0AEA6; background:#FBE9E6;}
-  .status-finding{color:#2A6F6F; border-color:#A7D6D2; background:#E4F5F3;}
-  .status-conviction{color:#242018; border-color:#C9C0A6; background:#EFEAD9;}
+  .status-allegation{color:#8A5200; background:#FDF0DB;}
+  .status-investigation{color:#0058B0; background:#E8F1FD;}
+  .status-charge{color:#B0271B; background:#FCE9E7;}
+  .status-finding{color:#1C7A50; background:#E5F6EC;}
+  .status-conviction{color:#3A3A3C; background:#EDEDF0;}
 
   .pill{
-    font-family:'Inter',sans-serif; font-weight:600; font-size:11.5px; padding:5px 11px; border-radius:999px;
-    background:var(--accent-soft); border:1px solid #C7D6E5; color:var(--accent);
+    font-family:var(--font-text); font-weight:600; font-size:11.5px; padding:5px 12px; border-radius:980px;
+    background:var(--accent-soft); border:none; color:var(--accent);
   }
   .btn{
-    font-family:'Inter',sans-serif; font-weight:600; font-size:13px; letter-spacing:0.1px;
-    background:var(--accent); color:#fff; border:none; border-radius:var(--radius-sm);
-    padding:10px 16px; cursor:pointer; transition:transform .1s ease, box-shadow .1s ease;
-    box-shadow:0 2px 6px rgba(58,90,130,0.25);
+    font-family:var(--font-text); font-weight:590; font-size:13px; letter-spacing:0.1px;
+    background:var(--accent); color:#fff; border:none; border-radius:980px;
+    padding:10px 18px; cursor:pointer; transition:background .15s ease, transform .08s ease;
+    box-shadow:none;
   }
-  .btn.secondary{background:#fff; color:var(--accent); border:1.5px solid var(--accent); box-shadow:none;}
-  .btn:hover{transform:translateY(-1px); box-shadow:0 4px 10px rgba(58,90,130,0.3);}
+  .btn.secondary{background:var(--paper-2); color:var(--accent); border:none; box-shadow:none;}
+  .btn:hover{background:var(--accent-hover); transform:translateY(0);}
   .btn.secondary:hover{background:var(--accent-soft);}
+  .btn:active{transform:scale(0.97);}
   input,textarea,select.form{
-    width:100%; font-family:'Inter',sans-serif; font-size:13.5px; padding:9px 11px;
-    border:1.5px solid var(--line-strong); border-radius:var(--radius-sm); background:#fff; color:var(--text);
+    width:100%; font-family:var(--font-text); font-size:13.5px; padding:10px 12px;
+    border:1px solid transparent; border-radius:var(--radius-sm); background:var(--paper-2); color:var(--text);
   }
-  input:focus{outline:none; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft);}
+  input:focus,textarea:focus{outline:none; background:#fff; border-color:var(--accent); box-shadow:0 0 0 4px var(--accent-soft);}
   label.field-label{
-    font-family:'Inter',sans-serif; font-weight:600; font-size:11px; text-transform:uppercase; letter-spacing:0.4px;
-    color:var(--text-muted); display:block; margin-bottom:5px;
+    font-family:var(--font-text); font-weight:590; font-size:11px; text-transform:uppercase; letter-spacing:0.3px;
+    color:var(--text-muted); display:block; margin-bottom:6px;
   }
   .field{margin-bottom:14px;}
 
   .card{
     background:#fff; border:1px solid var(--line); border-radius:var(--radius-md); padding:18px 19px;
+    box-shadow:0 1px 2px rgba(0,0,0,0.03);
   }
   .muted{color:var(--text-muted); font-size:13px; line-height:1.6;}
   .section-note{
-    font-size:13.5px; color:var(--text-muted); line-height:1.6; margin-top:-8px; margin-bottom:20px;
-    background:var(--paper-2); border-radius:var(--radius-sm); padding:12px 14px;
+    font-size:13.5px; color:var(--text-muted); line-height:1.6; margin-top:-6px; margin-bottom:20px;
+    background:var(--paper-2); border-radius:var(--radius-md); padding:13px 15px;
   }
-  .kicker{font-family:'Inter',sans-serif; font-weight:700; font-size:11px; letter-spacing:0.4px; text-transform:uppercase; color:var(--accent-2);}
+  .kicker{font-family:var(--font-text); font-weight:600; font-size:11px; letter-spacing:0.3px; text-transform:uppercase; color:var(--accent-2);}
 
   /* timeline */
   .timeline-wrap{overflow-x:auto; padding:8px 0 20px 0;}
-  .timeline-track{position:relative; height:150px; min-width:900px; margin:0 10px;}
-  .timeline-axis{position:absolute; left:0; right:0; top:75px; height:2px; background:var(--line-strong); border-radius:2px;}
-  .tl-event{position:absolute; top:60px; width:2px; text-align:center;}
+  .timeline-track{position:relative; height:250px; min-width:900px; margin:0 10px;}
+  .timeline-axis{position:absolute; left:0; right:0; top:var(--axis-y,150px); height:2px; background:var(--line-strong); border-radius:2px;}
+  .tl-event{position:absolute; top:calc(var(--axis-y,150px) - 15px); width:2px; text-align:center;}
   .tl-dot{
     width:16px; height:16px; border-radius:50%; margin:0 auto; cursor:pointer;
-    border:2.5px solid #fff; box-shadow:0 1px 4px rgba(0,0,0,0.25);
+    border:2.5px solid #fff; box-shadow:0 1px 4px rgba(0,0,0,0.2);
     transition:transform .12s ease;
   }
   .tl-dot:hover{transform:scale(1.4);}
   .tl-label{
-    position:absolute; top:22px; width:120px; left:-59px; text-align:center;
-    font-family:'Inter',sans-serif; font-weight:500; font-size:10.5px; color:var(--text-muted); line-height:1.3;
+    position:absolute; bottom:24px; width:126px; left:-62px; text-align:center;
+    font-family:var(--font-text); font-weight:500; font-size:10.5px; color:var(--text-muted); line-height:1.3;
   }
   .tl-day{
-    position:absolute; bottom:22px; width:70px; left:-34px; text-align:center;
-    font-family:'JetBrains Mono','IBM Plex Mono',monospace; font-size:10px; color:var(--accent); font-weight:600;
+    position:absolute; top:25px; width:70px; left:-34px; text-align:center;
+    font-family:var(--font-mono); font-size:10px; color:var(--accent); font-weight:600;
   }
-  .legend-row{display:flex; gap:16px; flex-wrap:wrap; font-family:'Inter',sans-serif; font-size:11.5px; color:var(--text-muted); margin-top:8px;}
+  .legend-row{display:flex; gap:16px; flex-wrap:wrap; font-family:var(--font-text); font-size:11.5px; color:var(--text-muted); margin-top:8px;}
   .legend-row .sw{display:inline-flex; align-items:center; gap:6px;}
   .legend-row .dot{width:11px;height:11px;border-radius:50%;display:inline-block;}
 
@@ -220,10 +231,10 @@
   .filter-bar{display:flex; gap:20px; flex-wrap:wrap; margin-bottom:18px; align-items:flex-end;
     background:var(--paper-2); padding:14px 16px; border-radius:var(--radius-md);}
   .filter-group{display:flex; flex-direction:column; gap:6px;}
-  .filter-group label{font-family:'Inter',sans-serif; font-weight:700; font-size:10.5px; text-transform:uppercase; letter-spacing:0.4px; color:var(--text-muted);}
+  .filter-group label{font-family:var(--font-text); font-weight:600; font-size:10.5px; text-transform:uppercase; letter-spacing:0.3px; color:var(--text-muted);}
   .chip-toggle{
-    font-family:'Inter',sans-serif; font-weight:600; font-size:11.5px; padding:5px 11px; border-radius:999px;
-    border:1.5px solid var(--line-strong); background:#fff; cursor:pointer; color:var(--text-muted);
+    font-family:var(--font-text); font-weight:600; font-size:11.5px; padding:5px 12px; border-radius:980px;
+    border:1px solid var(--line-strong); background:#fff; cursor:pointer; color:var(--text-muted);
     transition:all .12s ease;
   }
   .chip-toggle.on{background:var(--accent); color:#fff; border-color:var(--accent);}
@@ -235,11 +246,11 @@
     flex:0 0 auto; display:flex; flex-direction:column; align-items:center; width:118px; text-align:center;
   }
   .pf-badge{
-    width:48px; height:48px; border-radius:50%; display:flex; align-items:center; justify-content:center;
-    color:#fff; font-family:'JetBrains Mono','IBM Plex Mono',monospace; font-weight:700; font-size:14px; border:3px solid #fff;
-    box-shadow:0 2px 6px rgba(0,0,0,0.2);
+    width:46px; height:46px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    color:#fff; font-family:var(--font-mono); font-weight:700; font-size:13px; border:3px solid #fff;
+    box-shadow:0 2px 6px rgba(0,0,0,0.15);
   }
-  .pf-title{font-size:11px; font-family:'Inter',sans-serif; font-weight:600; margin-top:8px; color:var(--text); line-height:1.35;}
+  .pf-title{font-size:11px; font-family:var(--font-text); font-weight:590; margin-top:8px; color:var(--text); line-height:1.35;}
   .pf-sub{font-size:10px; color:var(--text-muted); margin-top:2px;}
   .pf-arrow{flex:0 0 auto; width:34px; height:2px; background:var(--line-strong); position:relative; margin-top:-30px;}
   .pf-arrow::after{
@@ -251,7 +262,7 @@
   .net-wrap{display:flex; justify-content:center; padding:12px 0;}
 
   /* scenario cards */
-  .risk-field .rk-label{font-family:'Inter',sans-serif; font-weight:700; font-size:10.5px; text-transform:uppercase; letter-spacing:0.4px; color:var(--accent-2);}
+  .risk-field .rk-label{font-family:var(--font-text); font-weight:600; font-size:10.5px; text-transform:uppercase; letter-spacing:0.3px; color:var(--accent-2);}
   .risk-field .rk-val{font-size:13.5px; line-height:1.6; margin-top:5px;}
 
   /* reliability */
@@ -259,48 +270,46 @@
     display:flex; gap:28px; align-items:center; background:#fff; border:1px solid var(--line);
     padding:18px 20px; border-radius:var(--radius-md); margin-bottom:20px; flex-wrap:wrap;
   }
-  .kappa-num{font-family:'Sora',sans-serif; font-size:36px; font-weight:800; color:var(--accent);}
-  .kappa-label{font-family:'Inter',sans-serif; font-weight:600; font-size:11px; text-transform:uppercase; color:var(--text-muted); letter-spacing:0.3px;}
+  .kappa-num{font-family:var(--font-display); font-size:34px; font-weight:700; letter-spacing:-0.5px; color:var(--accent);}
+  .kappa-label{font-family:var(--font-text); font-weight:600; font-size:11px; text-transform:uppercase; color:var(--text-muted); letter-spacing:0.3px;}
   .agree-y{color:var(--ok); font-weight:700;}
   .agree-n{color:var(--grade-d); font-weight:700;}
 
   /* analytics */
   .metric-card{background:#fff; border:1px solid var(--line); border-radius:var(--radius-md); padding:16px 17px;}
-  .metric-card .mv{font-family:'Sora',sans-serif; font-size:26px; font-weight:800; color:var(--accent);}
-  .metric-card .ml{font-family:'Inter',sans-serif; font-weight:600; font-size:10.5px; text-transform:uppercase; color:var(--text-muted); letter-spacing:0.3px; margin-top:4px;}
+  .metric-card .mv{font-family:var(--font-display); font-size:25px; font-weight:700; letter-spacing:-0.4px; color:var(--accent);}
+  .metric-card .ml{font-family:var(--font-text); font-weight:600; font-size:10.5px; text-transform:uppercase; color:var(--text-muted); letter-spacing:0.3px; margin-top:4px;}
   .matrix-table td, .matrix-table th{text-align:center;}
   .matrix-table td.diag{background:var(--accent-soft); font-weight:700;}
 
   footer.chrome-foot{
-    text-align:center; padding:24px; color:#8A8578; font-family:'Inter',sans-serif; font-size:11.5px;
+    text-align:center; padding:26px; color:#A1A1A6; font-family:var(--font-text); font-size:11.5px;
   }
   ::-webkit-scrollbar{height:9px; width:9px;}
   ::-webkit-scrollbar-thumb{background:var(--line-strong); border-radius:5px;}
 
-  /* Material-inspired application shell */
-  :root{--ink:#202124;--ink-2:#202124;--paper:#fff;--paper-2:#f8fafd;--line:#dadce0;--line-strong:#bdc1c6;--accent:#0b57d0;--accent-soft:#e8f0fe;--accent-2:#5f6368;--text:#202124;--text-muted:#5f6368;--grade-a:#137333;--grade-b:#0b57d0;--grade-c:#b06000;--grade-d:#c5221f;--grade-u:#5f6368;--ok:#137333;--radius-lg:16px;--radius-md:12px;--radius-sm:8px;}
-  body{background:#f8fafd;font-family:'Roboto',Arial,sans-serif;color:#202124;}
-  .mono{font-family:'Roboto Mono',monospace;}.serif{font-family:'Roboto',Arial,sans-serif;}
-  header.chrome{background:#fff;color:#202124;padding:16px 32px 0;border-bottom:1px solid #dadce0;box-shadow:0 1px 2px rgba(60,64,67,.08);}
-  .chrome-top{padding-bottom:12px;}.brand{gap:12px;}.brand .mark{width:40px;height:40px;background:#e8f0fe;border:0;border-radius:12px;color:#0b57d0;font-family:'Roboto',Arial,sans-serif;font-weight:700;}
-  .brand h1{font-family:'Roboto',Arial,sans-serif;font-size:22px;font-weight:500;letter-spacing:0;color:#202124;}.brand .sub{font-family:'Roboto',Arial,sans-serif;color:#5f6368;font-size:11px;}
-  .case-select-wrap label{font-family:'Roboto',Arial,sans-serif;color:#5f6368;letter-spacing:.5px;}.case-select-wrap{min-width:300px;}
-  select#caseSelect{background:#fff;color:#202124;border:1px solid #dadce0;border-radius:8px;padding:10px 12px;font-family:'Roboto',Arial,sans-serif;box-shadow:0 1px 2px rgba(60,64,67,.08);}
-  select#caseSelect:hover{border-color:#0b57d0;}select#caseSelect:focus{outline:2px solid #c2e7ff;outline-offset:1px;}select#caseSelect option{background:#fff;color:#202124;}
-  nav.tabs{gap:0;overflow-x:auto;flex-wrap:nowrap;padding:0;}nav.tabs button{position:relative;border:0;border-radius:0;color:#5f6368;padding:13px 14px 12px;font-family:'Roboto',Arial,sans-serif;font-weight:500;font-size:13px;}
-  nav.tabs button:hover{color:#0b57d0;background:#f8fafd;}nav.tabs button.active{color:#0b57d0;background:transparent;border:0;font-weight:700;}nav.tabs button.active::after{content:'';position:absolute;height:3px;background:#0b57d0;border-radius:3px 3px 0 0;left:12px;right:12px;bottom:0;}
-  .boundary{background:#e8f0fe;border:0;border-bottom:1px solid #c2e7ff;color:#174ea6;padding:10px 32px;font-family:'Roboto',Arial,sans-serif;}.boundary b{color:#174ea6;}
-  main{max-width:1440px;padding:28px 32px 56px;}.panel{background:#fff;border:1px solid #dadce0;border-radius:16px;box-shadow:0 1px 2px rgba(60,64,67,.12),0 1px 3px rgba(60,64,67,.08);padding:28px 30px;}
-  .panel-head{border-bottom:1px solid #e8eaed;padding-bottom:14px;margin-bottom:18px;}.panel-head h2{font-family:'Roboto',Arial,sans-serif;font-size:24px;font-weight:500;color:#202124;}.panel-head .tag,.pill{font-family:'Roboto',Arial,sans-serif;color:#174ea6;background:#e8f0fe;border:0;border-radius:18px;font-weight:500;}
-  table{font-size:14px;}th{background:#f8fafd;color:#5f6368;border-bottom:1px solid #dadce0;font-family:'Roboto',Arial,sans-serif;font-weight:500;padding:12px;}td{padding:13px 12px;border-bottom:1px solid #e8eaed;}tbody tr:nth-child(even) td{background:transparent;}tbody tr:hover td{background:#f8fafd;}
-  .grade-chip{border:2px solid #fff;box-shadow:0 1px 2px rgba(60,64,67,.2);font-family:'Roboto Mono',monospace;}.status-tag{font-family:'Roboto',Arial,sans-serif;font-weight:500;border-radius:6px;}
-  .btn{background:#0b57d0;color:#fff;border-radius:20px;padding:10px 18px;font-family:'Roboto',Arial,sans-serif;font-weight:500;box-shadow:none;}.btn:hover{background:#0842a0;transform:none;box-shadow:0 1px 2px rgba(60,64,67,.2);}.btn:focus-visible{outline:3px solid #c2e7ff;outline-offset:2px;}.btn.secondary{background:#fff;color:#0b57d0;border:1px solid #747775;}.btn.secondary:hover{background:#f8fafd;}
-  input,textarea,select.form{font-family:'Roboto',Arial,sans-serif;border:1px solid #747775;border-radius:6px;padding:11px 12px;}input:focus,textarea:focus,select.form:focus{outline:2px solid #c2e7ff;outline-offset:1px;border-color:#0b57d0;box-shadow:none;}label.field-label{font-family:'Roboto',Arial,sans-serif;color:#5f6368;font-weight:500;}
-  .card,.metric-card,.kappa-box{background:#fff;border:1px solid #dadce0;border-radius:12px;box-shadow:none;}.card{padding:18px;}.section-note{background:#f8fafd;border-left:4px solid #0b57d0;border-radius:4px;color:#3c4043;padding:12px 14px;}.kicker,.risk-field .rk-label{font-family:'Roboto',Arial,sans-serif;color:#5f6368;font-weight:500;}.metric-card .mv,.kappa-num{font-family:'Roboto',Arial,sans-serif;color:#202124;}.metric-card .ml,.kappa-label{font-family:'Roboto',Arial,sans-serif;}
-  .filter-bar{background:#f8fafd;border:1px solid #e8eaed;border-radius:12px;}.chip-toggle{font-family:'Roboto',Arial,sans-serif;border:1px solid #747775;border-radius:16px;color:#3c4043;}.chip-toggle.on{background:#e8f0fe;color:#174ea6;border-color:#174ea6;}.chip-toggle:hover{border-color:#0b57d0;}
-  .timeline-axis,.pf-arrow{background:#bdc1c6;}.pf-arrow::after{border-left-color:#bdc1c6;}.tl-dot,.pf-badge{box-shadow:0 1px 2px rgba(60,64,67,.24);}.tl-day{font-family:'Roboto Mono',monospace;color:#0b57d0;}.pf-title{font-family:'Roboto',Arial,sans-serif;}.legend-row{font-family:'Roboto',Arial,sans-serif;}
-  footer.chrome-foot{color:#5f6368;font-family:'Roboto',Arial,sans-serif;}
-  @media(max-width:900px){header.chrome{padding:14px 16px 0;}.boundary{padding:10px 16px;}main{padding:20px 16px 40px;}.panel{padding:22px 18px;}.case-select-wrap,select#caseSelect{min-width:100%;}.chrome-top{align-items:stretch;}.brand .sub{line-height:1.4;}.panel-head h2{font-size:22px;}}
+  /* Retro browser sticker theme — token-driven, shared across all modules */
+  body{background-color:var(--paper-2);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M24 0H0V24' fill='none' stroke='%231A1A1A' stroke-opacity='.12'/%3E%3C/svg%3E");color:#1A1A1A;}
+  header.chrome{position:relative;background:var(--paper-2);backdrop-filter:none;-webkit-backdrop-filter:none;color:#1A1A1A;border-bottom:5px solid #1A1A1A;box-shadow:none;padding-top:40px;}
+  .chrome-top{position:relative;}.chrome-top::before{content:'';position:absolute;top:-27px;left:0;width:12px;height:12px;border:2px solid #1A1A1A;border-radius:50%;background:#F26A3D;box-shadow:20px 0 0 -2px #F3C844,20px 0 0 0 #1A1A1A,40px 0 0 -2px #6FAE63,40px 0 0 0 #1A1A1A;}
+  header.chrome::after{content:'pathlens.local / research desk';position:absolute;top:15px;right:32px;color:#1A1A1A;font:500 10px/1 var(--font-mono);letter-spacing:.09em;text-transform:uppercase;}
+  .brand .mark{background:#F0F0E6;border:4px solid #1A1A1A;border-radius:12px;color:#1A1A1A;font-family:var(--font-mono);box-shadow:none;}
+  .brand h1,.panel-head h2{font-family:var(--font-display);font-weight:900;letter-spacing:-.04em;color:#1A1A1A;}
+  .brand .sub,.case-select-wrap label{color:#1A1A1A;font-family:var(--font-mono);font-weight:500;letter-spacing:.07em;text-transform:uppercase;}
+  select#caseSelect{background:#F0F0E6;color:#1A1A1A;border:4px solid #1A1A1A;border-radius:999px;font-family:var(--font-mono);font-weight:500;letter-spacing:.04em;box-shadow:none;background-image:none;}
+  select#caseSelect:hover{background:#fff;}select#caseSelect:focus{outline:3px solid #1A1A1A;outline-offset:3px;}
+  nav.tabs{gap:8px;margin-bottom:16px;padding:0;background:transparent;border-radius:0;width:auto;}
+  nav.tabs button{background:#F0F0E6;border:3px solid #1A1A1A;border-radius:999px;color:#1A1A1A;padding:8px 13px;font-family:var(--font-mono);font-weight:500;font-size:10px;letter-spacing:.06em;text-transform:uppercase;}
+  nav.tabs button:hover,nav.tabs button.active{background:var(--accent);color:#1A1A1A;border:3px solid #1A1A1A;font-weight:500;}
+  .boundary{background:#F0F0E6;border:0;border-bottom:4px solid #1A1A1A;color:#1A1A1A;font-family:var(--font-mono);font-weight:500;letter-spacing:.03em;}.boundary b{color:#1A1A1A;}
+  main{max-width:1320px;}.panel{background:var(--paper);border:5px solid #1A1A1A;border-radius:var(--radius-lg);box-shadow:none;}.panel-head{border-bottom:4px solid #1A1A1A;}.panel-head .tag,.pill{background:#D9F45C;border:3px solid #1A1A1A;border-radius:999px;color:#1A1A1A;font-family:var(--font-mono);font-weight:500;letter-spacing:.05em;text-transform:uppercase;}
+  th{background:#D9F45C;border-bottom:4px solid #1A1A1A;color:#1A1A1A;font-family:var(--font-mono);font-weight:500;letter-spacing:.06em;}td{border-bottom:2px solid #1A1A1A;color:#1A1A1A;}tbody tr:nth-child(even) td{background:rgba(217,244,92,.28);}tbody tr:hover td{background:#D9F45C;}
+  .btn{position:relative;background:var(--accent);color:#1A1A1A;border:4px solid #1A1A1A;border-radius:999px;padding:10px 32px 10px 17px;font-family:var(--font-mono);font-weight:500;letter-spacing:.05em;text-transform:uppercase;box-shadow:3px 3px 0 #1A1A1A;}.btn::after{content:'';position:absolute;right:12px;top:50%;width:7px;height:7px;border:2px solid #1A1A1A;border-radius:50%;background:#356C3B;transform:translateY(-50%);}.btn.secondary{background:#F0F0E6;color:#1A1A1A;border:4px solid #1A1A1A;}.btn:hover,.btn.secondary:hover{background:var(--accent-hover);color:#1A1A1A;box-shadow:1px 1px 0 #1A1A1A;transform:translate(2px,2px);}.btn:focus-visible{outline:3px solid #1A1A1A;outline-offset:3px;}
+  input,textarea,select.form{background:#fff;border:3px solid #1A1A1A;border-radius:var(--radius-sm);color:#1A1A1A;font-family:var(--font-text);}input:focus,textarea:focus,select.form:focus{background:#fff;border-color:#1A1A1A;box-shadow:0 0 0 3px #D9F45C;outline:none;}label.field-label,.kicker,.risk-field .rk-label,.filter-group label,.kappa-label,.metric-card .ml{color:#1A1A1A;font-family:var(--font-mono);font-weight:500;letter-spacing:.08em;text-transform:uppercase;}
+  .card,.metric-card,.kappa-box{background:#fff;border:4px solid #1A1A1A;border-radius:var(--radius-md);box-shadow:none;}.muted,.section-note,.pf-sub,.legend-row,.tl-label{color:#1A1A1A;}.section-note{background:#D9F45C;border:4px solid #1A1A1A;border-radius:var(--radius-md);}.filter-bar{background:#F0F0E6;border:4px solid #1A1A1A;border-radius:var(--radius-md);}.chip-toggle{border:3px solid #1A1A1A;background:#fff;color:#1A1A1A;font-family:var(--font-mono);font-weight:500;}.chip-toggle.on{background:#A8C97F;color:#1A1A1A;border-color:#1A1A1A;}.chip-toggle:hover{border-color:#1A1A1A;background:#D9F45C;}
+  .grade-chip,.tl-dot,.pf-badge{border-color:#1A1A1A;box-shadow:none;}.grade-chip,.pf-badge{color:#1A1A1A;}.timeline-axis,.pf-arrow{background:#1A1A1A;}.pf-arrow::after{border-left-color:#1A1A1A;}.tl-day{color:#1A1A1A;font-family:var(--font-mono);}.pf-title{color:#1A1A1A;font-family:var(--font-mono);font-weight:500;}.kappa-num,.metric-card .mv{color:#1A1A1A;font-family:var(--font-display);font-weight:900;}.matrix-table td.diag{background:#D9F45C;}.status-tag{border:3px solid #1A1A1A;border-radius:999px;color:#1A1A1A;font-family:var(--font-mono);font-weight:500;}.status-allegation{background:#F3C844;}.status-investigation{background:#A8C97F;}.status-charge{background:#F26A3D;}.status-finding{background:#6FAE63;}.status-conviction{background:#F0F0E6;}
+  footer.chrome-foot{color:#1A1A1A;font-family:var(--font-mono);font-weight:500;letter-spacing:.05em;text-transform:uppercase;}::-webkit-scrollbar-thumb{background:#1A1A1A;}
+  @media(max-width:900px){header.chrome{padding-top:42px;}header.chrome::after{top:17px;right:16px;font-size:8px;}.chrome-top::before{left:0;}nav.tabs{flex-wrap:nowrap;}.panel{border-width:4px;}.card,.metric-card,.kappa-box{border-width:3px;}.btn{border-width:3px;}.brand .sub{font-size:9px;}}
 </style>
 </head>
 <body>
@@ -485,7 +494,7 @@ const RELIABILITY = [
 /* =========================================================================
    STATE + HELPERS
    ========================================================================= */
-let state = { caseId: CASES[0].id, tab: 'intake', tlFilters:{grade:new Set(['A','B','C','D','U']), typeQuery:''} };
+let state = { caseId: CASES[0].id, tab: 'intake', tlFilters:{grade:new Set(['A','B','C','D','U']), typeQuery:''}, draftFIR:null };
 
 function caseEvents(id){ return EVENTS.filter(e=>e.case===id).sort((a,b)=>a.day-b.day); }
 function caseSources(id){ return SOURCES.filter(s=>s.case===id); }
@@ -494,82 +503,10 @@ function caseRisk(id){ return RISK_FORMULATIONS.find(r=>r.case===id); }
 function findCase(id){ return CASES.find(c=>c.id===id); }
 function sourceById(id){ return SOURCES.find(s=>s.id===id); }
 function eventById(id){ return EVENTS.find(e=>e.id===id); }
-function escapeHtml(value){ return String(value ?? '').replace(/[&<>'\"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','\"':'&quot;'}[c])); }
-
-/* FIR intake is deliberately transient: the original document/text is read only
-   to create this review draft, then discarded.  No direct identifier is written
-   into CASES, EVENTS, SOURCES, exports, or the page state. */
-let firDraft = null;
-const FIR_EVENT_PATTERNS = [
-  {re:/(?:assault|beat|hit|attack|injur(?:ed|y)|hurt|stab(?:bed)?|struck)[^.\n]{0,180}/ig, code:'V', type:'Alleged violent act', intensity:4},
-  {re:/(?:threat(?:en(?:ed|ing)?)?|intimidat(?:e|ed|ion)|warned)[^.\n]{0,180}/ig, code:'T', type:'Alleged threat or intimidation', intensity:3},
-  {re:/(?:stalk(?:ed|ing)?|follow(?:ed|ing)?|harass(?:ed|ment)?|unwanted contact)[^.\n]{0,180}/ig, code:'U', type:'Alleged unwanted contact / surveillance', intensity:3},
-  {re:/(?:weapon|knife|firearm|gun)[^.\n]{0,180}/ig, code:'A', type:'Alleged weapon/access change', intensity:3},
-  {re:/(?:restrain(?:ed|ing)?|confine(?:d|ment)|prevent(?:ed|ing)?.{0,40}(?:leav|exit))[^.\n]{0,180}/ig, code:'B', type:'Alleged boundary violation', intensity:3}
-];
-function nextFirCaseId(){
-  const n = CASES.filter(c=>/^IN-2026-FIR-\d+$/.test(c.id)).length + 1;
-  return `IN-2026-FIR-${String(n).padStart(3,'0')}`;
-}
-function extractFirDraft(rawText){
-  const text = rawText.replace(/\u0000/g,' ').replace(/\s+/g,' ').trim();
-  const caseId = nextFirCaseId();
-  const dates = [...new Set((text.match(/\b(?:\d{1,2}[\/-]\d{1,2}[\/-]\d{2,4}|\d{1,2}\s+(?:Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)[a-z]*\s+\d{2,4})\b/ig)||[]))].slice(0,3);
-  const statutes = [...new Set((text.match(/\b(?:IPC|BNS|CrPC|BNSS|POCSO|DV Act|Domestic Violence Act)\s*(?:section|sec\.?|s\.?|u\/s)?\s*\d+[A-Za-z]*(?:\s*(?:,|and|\/|r\/w)\s*\d+[A-Za-z]*)*/ig)||[]))].slice(0,8);
-  const partyMatches = [...text.matchAll(/(?:complainant|accused|victim|informant|respondent)\s*(?:[:\-]|is|namely)?\s*([A-Z][a-z]+(?:\s+[A-Z][a-z]+){0,2})/g)];
-  const names = [...new Set(partyMatches.map(m=>m[1]).filter(n=>n.length>2))].slice(0,6);
-  const subjectCodes = names.length ? names.map((_,i)=>`Subject-${caseId.slice(-3)}-${i+1}`) : [`Subject-${caseId.slice(-3)}-1`];
-  const redact = snippet => {
-    let safe = snippet;
-    names.forEach((name,i)=>{ safe = safe.replaceAll(name, subjectCodes[i]); });
-    const tokens = subjectCodes.map((code,i)=>`__CODE_${i}__`);
-    subjectCodes.forEach((code,i)=>{ safe=safe.replaceAll(code,tokens[i]); });
-    safe=safe.replace(/\b(?:Mr|Ms|Mrs|Shri|Smt)\.?\s+[A-Z][a-z]+(?:\s+[A-Z][a-z]+){0,2}\b/g, '[name removed]')
-             .replace(/\b[A-Z]{2,}(?:\s+[A-Z]{2,}){0,3}\b/g, '[name removed]')
-             .replace(/\b[A-Z][a-z]{2,}(?:\s+[A-Z][a-z]{2,})*\b/g, '[name removed]');
-    tokens.forEach((token,i)=>{ safe=safe.replaceAll(token,subjectCodes[i]); });
-    return safe;
-  };
-  const events = [];
-  FIR_EVENT_PATTERNS.forEach(p=>{
-    const match = p.re.exec(text); p.re.lastIndex = 0;
-    if(match) events.push({code:p.code, type:p.type, behaviour:redact(match[0]).slice(0,220), intensity:p.intensity});
-  });
-  if(!events.length && text) events.push({code:'U', type:'Alleged act — coding required', behaviour:'FIR contains narrative requiring researcher coding; no event type was auto-classified.', intensity:1});
-  return {caseId, dates, statutes, subjectCodes, events, extractedAt:new Date().toISOString()};
-}
-async function pdfText(file){
-  if(!window.pdfjsLib){
-    await new Promise((resolve,reject)=>{
-      const s=document.createElement('script'); s.src='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js'; s.onload=resolve; s.onerror=()=>reject(new Error('PDF text reader could not be loaded. Paste the FIR text instead.')); document.head.appendChild(s);
-    });
-  }
-  window.pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-  const pdf=await window.pdfjsLib.getDocument({data:await file.arrayBuffer()}).promise;
-  const pages=[]; for(let i=1;i<=pdf.numPages;i++){ const p=await pdf.getPage(i); const c=await p.getTextContent(); pages.push(c.items.map(x=>x.str).join(' ')); }
-  return pages.join('\n');
-}
-async function prepareFirIntake(){
-  const file=document.getElementById('firFile')?.files[0]; const pasted=document.getElementById('firText')?.value.trim(); const status=document.getElementById('firStatus');
-  try{
-    if(!file && !pasted) throw new Error('Choose a .txt or text-based PDF, or paste FIR text.');
-    if(status) status.textContent='Extracting candidate fields locally…';
-    let raw = pasted || (file.type==='application/pdf' || /\.pdf$/i.test(file.name) ? await pdfText(file) : await file.text());
-    firDraft=extractFirDraft(raw); raw='';
-    renderInto();
-  }catch(err){ if(status) status.textContent=err.message; }
-}
-function approveFirIntake(){
-  if(!firDraft) return;
-  const d=firDraft, sourceId=`S-${d.caseId.slice(-3)}-FIR`, baseDay=1;
-  CASES.push({id:d.caseId, pathway:'FIR intake — review pending', jurisdiction:'Not yet coded', offence:'Candidate statutes: '+(d.statutes.join('; ')||'none detected'), relationship:'Not yet coded', ageBand:'Not recorded', sex:'Not recorded', status:'Extracted — events approved; formulation not created', dataAvail:'FIR (local intake; document not retained)', window:d.dates[0]||'Date not extracted', extractedDate:d.dates[0]||'Not extracted', candidateStatutes:d.statutes, subjectCodes:d.subjectCodes});
-  SOURCES.push({id:sourceId, case:d.caseId, type:'FIR', date:d.dates[0]||'Not extracted', provenance:'Researcher-uploaded local document; original not retained', corroboration:0, contradiction:false, admissibility:'Unreviewed extraction — researcher confirmation required', grade:'U'});
-  d.events.forEach((e,i)=>EVENTS.push({id:`E-${d.caseId.slice(-3)}-${i+1}`,case:d.caseId,day:baseDay+i,code:e.code,type:e.type,actor:d.subjectCodes[0],target:d.subjectCodes[1]||'Subject/Group code pending confirmation',location:'Not extracted',channel:'FIR narrative',behaviour:e.behaviour,intensity:e.intensity,specificity:1,opportunity:false,protective:false,source:sourceId,grade:'U',reviewStatus:'unreviewed — pending researcher confirmation'}));
-  state.caseId=d.caseId; firDraft=null; render();
-}
 
 function gradeChip(g){ return `<span class="grade-chip grade-${g}" title="${GRADE_LABEL[g]}">${g}</span>`; }
 function statusTag(s){ return `<span class="status-tag status-${s}">${s}</span>`; }
+function reportEscape(value){ return String(value ?? '').replace(/[&<>'\"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','\"':'&quot;'}[c])); }
 
 const TABS = [
   {id:'intake', label:'01 · Case Intake'},
@@ -583,6 +520,7 @@ const TABS = [
   {id:'reliability', label:'09 · Reliability Lab'},
   {id:'analytics', label:'10 · Analytics'},
   {id:'export', label:'11 · Export'},
+  {id:'report', label:'12 · Provisional FIR Report'},
 ];
 
 /* =========================================================================
@@ -613,31 +551,6 @@ function renderIntake(){
       <td>${c.window}</td>
     </tr>`).join('');
 
-  const intake = firDraft ? `
-    <div class="card" style="margin-top:22px; border-color:var(--grade-b);">
-      <div class="panel-head"><h3 class="serif" style="margin:0;">Proposed de-identified intake</h3><span class="tag">Review before record creation</span></div>
-      <p class="section-note">Candidate extraction only. Names were used transiently to create codes and are not shown or stored. Confirm each event in the Timeline Builder after creating the record.</p>
-      <div class="grid-3">
-        <div><div class="rk-label">Case ID</div><div class="rk-val mono">${escapeHtml(firDraft.caseId)}</div></div>
-        <div><div class="rk-label">Subject / group codes</div><div class="rk-val mono">${firDraft.subjectCodes.map(escapeHtml).join(', ')}</div></div>
-        <div><div class="rk-label">Candidate date(s)</div><div class="rk-val">${firDraft.dates.map(escapeHtml).join(', ')||'None detected'}</div></div>
-      </div>
-      <div class="field" style="margin-top:14px;"><div class="rk-label">Candidate statute references</div><div class="rk-val">${firDraft.statutes.map(escapeHtml).join('; ')||'None detected — researcher coding required'}</div></div>
-      <div class="field"><div class="rk-label">Candidate alleged acts</div><ul class="muted" style="margin:6px 0 0 18px;">${firDraft.events.map(e=>`<li><b>${escapeHtml(e.type)}</b> — ${escapeHtml(e.behaviour)}</li>`).join('')}</ul></div>
-      <button class="btn" onclick="approveFirIntake()">Create case &amp; retain as unreviewed</button>
-      <button class="btn secondary" style="margin-left:8px;" onclick="firDraft=null; renderInto();">Discard draft</button>
-    </div>` : `
-    <div class="card" style="margin-top:22px;">
-      <div class="panel-head"><h3 class="serif" style="margin:0;">Upload FIR</h3><span class="tag">Step 1 · local, transient extraction</span></div>
-      <p class="muted">Choose a text-based PDF or .txt file, or paste text. Processing happens in this browser; the original file and real names are not retained in the research record. Scanned PDFs require an OCR-readable version or pasted OCR text.</p>
-      <div class="grid-2">
-        <div class="field"><label class="field-label" for="firFile">FIR document</label><input id="firFile" type="file" accept=".txt,text/plain,.pdf,application/pdf"></div>
-        <div class="field"><label class="field-label" for="firText">Or paste FIR text</label><textarea id="firText" rows="3" placeholder="Paste text only if you are authorised to process it."></textarea></div>
-      </div>
-      <button class="btn" onclick="prepareFirIntake()">Extract candidate fields</button><span id="firStatus" class="muted" style="margin-left:10px;"></span>
-      <p class="section-note" style="margin:14px 0 0;">This creates candidates for date, involved-party codes, alleged acts, and statute references. It does not determine facts, guilt, or risk. No RISK_FORMULATIONS scenario is created from this upload; extracted events remain <b>unreviewed — pending researcher confirmation</b> until individually reviewed.</p>
-    </div>`;
-
   return `
   <div class="panel">
     <div class="panel-head">
@@ -645,6 +558,21 @@ function renderIntake(){
       <span class="tag">Anonymised Case_ID register</span>
     </div>
     <p class="section-note">No names, phone numbers, addresses, or other unnecessary identifiers are captured. Each Case_ID is a synthetic research record standing in for a de-identified pathway type from Section 12 of the manual.</p>
+
+    <div class="card" style="margin-bottom:22px;">
+      <div class="kicker">Upload FIR → build a case record</div>
+      <p class="muted" style="margin:6px 0 14px 0;">Paste FIR text, or upload a .txt file. The system extracts candidate fields (date, police station, statute sections, offence summary) and immediately redacts any accused/complainant names it detects before anything is shown or stored — real names are never written into the case record. Review the extracted fields below and confirm before the case is added; nothing is saved until you click <b>Confirm &amp; add case</b>.</p>
+      <div class="field">
+        <label class="field-label">FIR text</label>
+        <textarea id="firText" rows="6" placeholder="Paste FIR text here, or choose a .txt file below…"></textarea>
+      </div>
+      <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+        <input type="file" id="firFile" accept=".txt" onchange="handleFIRFile(event)">
+        <button class="btn" onclick="processFIR()">Extract &amp; build case record</button>
+      </div>
+      ${renderFIRReview()}
+    </div>
+
     <div style="overflow-x:auto;">
     <table>
       <thead><tr><th>Case_ID</th><th>Pathway type</th><th>Jurisdiction</th><th>Offence category</th><th>Relationship</th><th>Age band / Sex</th><th>Case status</th><th>Observation window</th></tr></thead>
@@ -656,8 +584,142 @@ function renderIntake(){
       <div class="card"><div class="kicker">Coded events</div><div style="font-family:'Source Serif 4',serif; font-size:28px; font-weight:700; margin-top:4px;">${EVENTS.length}</div></div>
       <div class="card"><div class="kicker">Sources on file</div><div style="font-family:'Source Serif 4',serif; font-size:28px; font-weight:700; margin-top:4px;">${SOURCES.length}</div></div>
     </div>
-    ${intake}
   </div>`;
+}
+
+/* =========================================================================
+   FIR UPLOAD — extract, redact, review, confirm
+   No real name is ever written into CASES/EVENTS/SOURCES. Extraction is a
+   simple heuristic (regex) pass, not a legal determination — everything it
+   produces is provisional and must be checked by a researcher before use.
+   ========================================================================= */
+function handleFIRFile(e){
+  const f = e.target.files[0];
+  if(!f) return;
+  const reader = new FileReader();
+  reader.onload = ()=>{ document.getElementById('firText').value = reader.result; };
+  reader.readAsText(f);
+}
+
+function nextCaseSuffix(){
+  const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const n = CASES.length;
+  return { letter: letters[n % 26], num: String(n+1).padStart(3,'0') };
+}
+
+function extractFIRFields(text){
+  const sections = [...new Set([...text.matchAll(/(?:section|u\/s|sec\.?)\s*([0-9]+[A-Za-z]*)/gi)].map(m=>m[1]))];
+  const dateMatch = text.match(/\b\d{1,2}[\/\-.]\d{1,2}[\/\-.]\d{2,4}\b/);
+  const psMatch = text.match(/P\.?S\.?[:\-]?\s*([A-Za-z][A-Za-z\s]{2,40})/i);
+  const accusedMatch = text.match(/accused[:\-]?\s*([A-Za-z][A-Za-z.\s]{2,40})/i);
+  const complainantMatch = text.match(/complainant[:\-]?\s*([A-Za-z][A-Za-z.\s]{2,40})/i);
+  const firNoMatch = text.match(/FIR\s*(?:No\.?|Number)?\s*[:\-]?\s*([A-Za-z0-9\/\-]+)/i);
+  return {
+    sections,
+    date: dateMatch ? dateMatch[0] : '',
+    policeStation: psMatch ? psMatch[1].trim() : '',
+    accusedRaw: accusedMatch ? accusedMatch[1].trim() : '',
+    complainantRaw: complainantMatch ? complainantMatch[1].trim() : '',
+    firNumber: firNoMatch ? firNoMatch[1].trim() : '',
+  };
+}
+
+function redactNames(text, names){
+  let out = text;
+  names.filter(n=>n && n.length>=3).forEach(n=>{
+    const esc = n.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+    out = out.replace(new RegExp(esc,'gi'), '[REDACTED]');
+  });
+  return out;
+}
+function removeProbableNames(text){
+  return text
+    .replace(/\b(accused|complainant|victim|informant|respondent)\s*[:\-]?\s*[A-Z][A-Za-z.'-]*(?:\s+[A-Z][A-Za-z.'-]*){0,3}/gi, '$1 [REDACTED]')
+    .replace(/\b[A-Z]{2,}(?:\s+[A-Z]{2,}){1,3}\b/g, '[REDACTED]');
+}
+
+function processFIR(){
+  const raw = (document.getElementById('firText').value || '').trim();
+  if(!raw){ alert('Paste FIR text, or upload a .txt file, first.'); return; }
+  const f = extractFIRFields(raw);
+  const {letter, num} = nextCaseSuffix();
+  const redacted = redactNames(raw, [f.accusedRaw, f.complainantRaw]).slice(0, 700);
+
+  state.draftFIR = {
+    caseId: `IN-2026-${letter}-${num}`, letter, num,
+    subjectCode: `Subject-${letter}1`, complainantCode: `Complainant-${letter}2`,
+    firNumber: f.firNumber || '', date: f.date || '',
+    jurisdiction: f.policeStation || '',
+    sections: f.sections,
+    offenceSummary: redacted || '',
+    namesDetected: !!(f.accusedRaw || f.complainantRaw),
+  };
+  document.getElementById('firText').value = ''; // raw text is not retained once processed
+  renderInto();
+}
+
+function renderFIRReview(){
+  const d = state.draftFIR;
+  if(!d) return '';
+  return `
+  <div class="card" style="margin-top:16px; border:1.5px solid var(--accent);">
+    <div class="kicker">Review before adding — draft case ${d.caseId}</div>
+    <p class="muted" style="margin:6px 0 14px 0;">${d.namesDetected ? 'One or more names were detected and redacted below — please re-check the summary for any identifier the pattern match missed before confirming.' : 'No names were confidently detected — please re-check the summary yourself, since this is a simple text match, not a guarantee.'} Fields left blank were not detected automatically; fill them in or leave as "Unspecified".</p>
+    <div class="grid-2">
+      <div class="field"><label class="field-label">Case ID (auto-assigned)</label><input value="${d.caseId}" readonly></div>
+      <div class="field"><label class="field-label">FIR number</label><input id="d_firNumber" value="${d.firNumber}" placeholder="Not detected — enter manually"></div>
+      <div class="field"><label class="field-label">Date</label><input id="d_date" value="${d.date}" placeholder="Not detected — enter manually"></div>
+      <div class="field"><label class="field-label">Jurisdiction / police station</label><input id="d_jurisdiction" value="${d.jurisdiction}" placeholder="Not detected — enter manually"></div>
+      <div class="field"><label class="field-label">Subject (accused) — pseudonymous code</label><input value="${d.subjectCode}" readonly></div>
+      <div class="field"><label class="field-label">Complainant — pseudonymous code</label><input value="${d.complainantCode}" readonly></div>
+    </div>
+    <div class="field">
+      <label class="field-label">Detected statute sections (comma-separated — edit freely)</label>
+      <input id="d_sections" value="${d.sections.join(', ')}">
+    </div>
+    <div class="field">
+      <label class="field-label">Offence summary — redacted, truncated to 700 characters</label>
+      <textarea id="d_summary" rows="4">${d.offenceSummary}</textarea>
+    </div>
+    <div style="display:flex; gap:10px;">
+      <button class="btn" onclick="confirmFIRCase()">Confirm &amp; add case</button>
+      <button class="btn secondary" onclick="state.draftFIR=null; renderInto();">Discard</button>
+    </div>
+  </div>`;
+}
+
+function confirmFIRCase(){
+  const d = state.draftFIR;
+  if(!d) return;
+  const firNumber = document.getElementById('d_firNumber').value.trim();
+  const date = document.getElementById('d_date').value.trim() || 'Unspecified';
+  const jurisdiction = document.getElementById('d_jurisdiction').value.trim() || 'Unspecified';
+  const sections = document.getElementById('d_sections').value.trim();
+  const summary = removeProbableNames(document.getElementById('d_summary').value.trim()) || 'No summary text extracted — edit manually in a future pass.';
+
+  CASES.push({
+    id: d.caseId, pathway: 'Unclassified — pending analyst review', jurisdiction,
+    offence: 'Pending classification (from uploaded FIR)', relationship: 'Unspecified',
+    ageBand: 'Unspecified', sex: 'Unspecified',
+    status: 'FIR uploaded — unverified, pending researcher review',
+    dataAvail: `FIR${firNumber?' '+firNumber:''} (uploaded, single-source)`, window: 'Unspecified',
+    pendingReview: true,
+  });
+
+  const sourceId = `S-${d.letter}1`;
+  SOURCES.push({ id: sourceId, case: d.caseId, type:'FIR', date, provenance:'Uploaded document (research-only, unverified)', corroboration:0, contradiction:false, admissibility:'Research-only pending verification', grade:'U' });
+
+  const eventId = `E-${d.letter}1`;
+  EVENTS.push({ id: eventId, case: d.caseId, day:1, code:'G', type:'Alleged offence (from FIR) — pending detailed coding', actor: d.subjectCode, target: d.complainantCode, location: jurisdiction, channel:'Official record', behaviour: summary, intensity:0, specificity:0, opportunity:false, protective:false, source: sourceId, grade:'U', reviewStatus:'unreviewed — pending researcher confirmation' });
+
+  sections.split(',').map(s=>s.trim()).filter(Boolean).forEach(sec=>{
+    LEGAL_MAP.push({ event: eventId, case: d.caseId, statute:'Statute unspecified — verify against bare Act', section:`Section ${sec} — candidate mapping only, unverified`, element:'Pending element-by-element review', support:`FIR (${sourceId})`, contradiction:'Not yet reviewed', status:'allegation' });
+  });
+
+  state.draftFIR = null;
+  state.caseId = d.caseId;
+  state.tab = 'report';
+  render();
 }
 
 /* =========================================================================
@@ -675,13 +737,33 @@ function renderTimeline(){
 
   const filtered = evs.filter(e=>state.tlFilters.grade.has(e.grade) && e.type.toLowerCase().includes(state.tlFilters.typeQuery.toLowerCase()));
 
-  const dots = filtered.map(e=>{
+  // Assign distinct horizontal offsets for simultaneous events, then stack
+  // labels into the first non-colliding lane for nearby dates.
+  const sameDayCounts = new Map();
+  filtered.forEach(e=>sameDayCounts.set(e.day,(sameDayCounts.get(e.day)||0)+1));
+  const sameDayIndices = new Map();
+  const positioned = filtered.map(e=>{
+    const sameDayIndex = sameDayIndices.get(e.day)||0;
+    sameDayIndices.set(e.day,sameDayIndex+1);
     const pct = 4 + ((e.day-minDay)/span)*92;
+    const offset = (sameDayIndex-(sameDayCounts.get(e.day)-1)/2)*22;
+    return {...e,pct,offset,showDay:sameDayIndex===0};
+  });
+  const laneEnds = [];
+  positioned.slice().sort((a,b)=>a.pct-b.pct || a.offset-b.offset).forEach(e=>{
+    const x=e.pct*9+e.offset;
+    let lane=laneEnds.findIndex(end=>x-end>=132);
+    if(lane<0){ lane=laneEnds.length; laneEnds.push(x); } else laneEnds[lane]=x;
+    e.lane=lane;
+  });
+  const timelineHeight=Math.max(250,150+laneEnds.length*32+70);
+  const axisY=timelineHeight-80;
+  const dots = positioned.map(e=>{
     return `
-    <div class="tl-event" style="left:${pct}%;">
-      <div class="tl-label">${e.code} · ${e.type.split('/')[0].split(':')[0]}</div>
+    <div class="tl-event" style="left:calc(${e.pct}% + ${e.offset}px);">
+      <div class="tl-label" style="bottom:calc(24px + ${e.lane*32}px);">${e.code} · ${e.type.split('/')[0].split(':')[0]}</div>
       <div class="tl-dot" style="background:${GRADE_COLOR[e.grade]};" onclick="showEventDetail('${e.id}')" title="${e.type}"></div>
-      <div class="tl-day">Day ${e.day}</div>
+      ${e.showDay?`<div class="tl-day">Day ${e.day}</div>`:''}
     </div>`;
   }).join('');
 
@@ -705,7 +787,7 @@ function renderTimeline(){
     </div>
 
     <div class="timeline-wrap">
-      <div class="timeline-track">
+      <div class="timeline-track" style="height:${timelineHeight}px; --axis-y:${axisY}px;">
         <div class="timeline-axis"></div>
         ${dots}
       </div>
@@ -737,14 +819,7 @@ function showEventDetail(id){
       <div style="margin-top:10px; display:flex; align-items:center; gap:10px;">
         ${gradeChip(e.grade)} <span class="muted">Source ${src.id} — ${src.type}, ${src.provenance}${src.contradiction?' (contested)':''}</span>
       </div>
-      ${e.reviewStatus?`<p class="section-note" style="margin:12px 0 0;">${escapeHtml(e.reviewStatus)}</p>`:''}
-      ${e.reviewStatus==='unreviewed — pending researcher confirmation'?`<button class="btn" style="margin-top:10px;" onclick="approveExtractedEvent('${e.id}')">Mark event reviewed &amp; approved</button>`:''}
     </div>`;
-}
-function approveExtractedEvent(id){
-  const e=eventById(id); if(!e || e.reviewStatus!=='unreviewed — pending researcher confirmation') return;
-  e.reviewStatus='researcher reviewed and approved';
-  renderInto();
 }
 
 /* =========================================================================
@@ -936,8 +1011,11 @@ function renderProtective(){
 function renderScenario(){
   const r = caseRisk(state.caseId);
   if(!r){
-    const pending=caseEvents(state.caseId).some(e=>e.reviewStatus==='unreviewed — pending researcher confirmation');
-    return `<div class="panel"><div class="panel-head"><h2>Scenario Formulation</h2></div><p class="section-note">${pending?'Blocked: this FIR intake contains extracted events marked unreviewed — pending researcher confirmation. A researcher must review and approve the extracted events before any scenario can be recorded.':'No formulation recorded.'}</p></div>`;
+    const c = findCase(state.caseId);
+    const msg = c && c.pendingReview
+      ? `This case was built from an uploaded FIR and has a single unverified, low-grade source. A structured risk formulation should not be auto-generated from that alone — code and corroborate more events first (Timeline Builder, Evidence Matrix), then have a researcher draft the formulation.`
+      : `No formulation recorded for this case yet.`;
+    return `<div class="panel"><div class="panel-head"><h2>Structured Risk Formulation</h2></div><p class="muted">${msg}</p></div>`;
   }
 
   const fields = [
@@ -1169,6 +1247,49 @@ function renderExport(){
 }
 
 /* =========================================================================
+   RENDER: TAB — PROVISIONAL FIR REPORT
+   This is a comprehensive descriptive report, not a risk formulation. It is
+   available from a single, unverified FIR but labels every assertion as alleged
+   and records the evidence gaps that must be resolved by a researcher.
+   ========================================================================= */
+function provisionalReportMarkup(caseId, standalone=false){
+  const c=findCase(caseId), evs=caseEvents(caseId), srcs=caseSources(caseId), legal=caseLegal(caseId);
+  if(!c) return '<p>No case selected.</p>';
+  const isProvisional=!!c.pendingReview;
+  const eventRows=evs.map(e=>`<tr><td>${reportEscape(e.id)}</td><td>${reportEscape(e.type)}</td><td>${reportEscape(e.actor)} → ${reportEscape(e.target)}</td><td>${reportEscape(e.behaviour)}</td><td>${reportEscape(e.source)} · Grade ${reportEscape(e.grade)}${e.reviewStatus?`<br>${reportEscape(e.reviewStatus)}`:''}</td></tr>`).join('') || '<tr><td colspan="5">No events have been coded.</td></tr>';
+  const sourceRows=srcs.map(s=>`<tr><td>${reportEscape(s.id)}</td><td>${reportEscape(s.type)}</td><td>${reportEscape(s.date)}</td><td>${reportEscape(s.provenance)}</td><td>${reportEscape(s.admissibility)} · Grade ${reportEscape(s.grade)}</td></tr>`).join('') || '<tr><td colspan="5">No source records available.</td></tr>';
+  const legalRows=legal.map(l=>`<tr><td>${reportEscape(l.section)}</td><td>${reportEscape(l.element)}</td><td>${reportEscape(l.support)}</td><td>${reportEscape(l.status)}</td></tr>`).join('') || '<tr><td colspan="4">No candidate legal references were extracted.</td></tr>';
+  const report=`
+    <section class="report-sheet">
+      <div class="panel-head"><div><div class="kicker">PATH-LENS · research-only report</div><h2>${isProvisional?'Provisional FIR Case Report':'Case Research Report'}</h2></div><span class="tag">${reportEscape(c.id)} · ${isProvisional?'UNVERIFIED / SINGLE-SOURCE':'Research record'}</span></div>
+      <p class="section-note"><b>Evidence status:</b> ${isProvisional?'This report was generated from an unverified FIR. Every event and legal reference is an allegation or candidate extraction, not a verified fact, finding, diagnosis, prediction, or recommendation. It must not be used for detention, bail, sentencing, watch-listing, or automated decision-making.':'This report remains descriptive and is not a predictive assessment.'}</p>
+      <div class="grid-2">
+        <div class="card"><div class="kicker">Case identity</div><p class="muted"><b>Case ID:</b> ${reportEscape(c.id)}<br><b>Status:</b> ${reportEscape(c.status)}<br><b>Jurisdiction:</b> ${reportEscape(c.jurisdiction)}<br><b>Observation window:</b> ${reportEscape(c.window)}</p></div>
+        <div class="card"><div class="kicker">De-identification &amp; scope</div><p class="muted">All actors use pseudonymous codes. The source document is not included. This report contains only the de-identified research record and does not establish the identity, conduct, or legal responsibility of any person.</p></div>
+      </div>
+      <h3 class="serif" style="margin:24px 0 10px;">1. Source and evidence status</h3>
+      <div style="overflow-x:auto;"><table><thead><tr><th>Source ID</th><th>Type</th><th>Date</th><th>Provenance</th><th>Reliability / use</th></tr></thead><tbody>${sourceRows}</tbody></table></div>
+      <h3 class="serif" style="margin:24px 0 10px;">2. Alleged events requiring researcher confirmation</h3>
+      <div style="overflow-x:auto;"><table><thead><tr><th>Event ID</th><th>Candidate coding</th><th>Subject / party codes</th><th>Alleged conduct (de-identified)</th><th>Source / grade</th></tr></thead><tbody>${eventRows}</tbody></table></div>
+      <h3 class="serif" style="margin:24px 0 10px;">3. Candidate legal references</h3>
+      <div style="overflow-x:auto;"><table><thead><tr><th>Candidate section</th><th>Element requiring review</th><th>Current support</th><th>Status</th></tr></thead><tbody>${legalRows}</tbody></table></div>
+      <h3 class="serif" style="margin:24px 0 10px;">4. Evidence gaps and required next steps</h3>
+      <div class="card"><ol class="muted" style="margin:0; padding-left:20px;"><li>Authenticate the FIR and confirm its provenance, date, and statutory references against the original record.</li><li>Independently corroborate or contest each alleged event; preserve contradictions rather than resolving them by inference.</li><li>Review and approve the event coding, including actor/target codes and alleged-act descriptions.</li><li>Document protective or control conditions only when a source supports them.</li><li>Do not create a scenario formulation until the researcher has reviewed and approved the extracted events.</li></ol></div>
+      <h3 class="serif" style="margin:24px 0 10px;">5. Analytic boundary</h3>
+      <p class="section-note">PATH-LENS records descriptive research variables; it does not calculate probabilities of future violence, diagnose a person, determine guilt, or replace legal and professional judgment. The absence of corroboration is an evidence gap, not evidence that an allegation is true or false.</p>
+    </section>`;
+  return standalone ? `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PATH-LENS Provisional FIR Report — ${reportEscape(c.id)}</title><style>body{font-family:Arial,sans-serif;color:#202124;line-height:1.5;max-width:1080px;margin:32px auto;padding:0 24px}h2{margin:4px 0 0}h3{font-size:17px}table{border-collapse:collapse;width:100%;font-size:13px}th,td{border:1px solid #dadce0;padding:9px;text-align:left;vertical-align:top}th{background:#f8fafd}.tag{background:#e8f0fe;color:#174ea6;border-radius:14px;padding:5px 10px;font-size:12px}.panel-head{display:flex;justify-content:space-between;gap:16px;border-bottom:1px solid #dadce0;padding-bottom:14px}.kicker{font-size:11px;text-transform:uppercase;color:#5f6368;font-weight:bold}.section-note{background:#f8fafd;border-left:4px solid #0b57d0;padding:12px 14px}.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}.card{border:1px solid #dadce0;padding:14px;border-radius:8px}.muted{color:#3c4043}@media(max-width:700px){.grid-2{grid-template-columns:1fr}.panel-head{display:block}.tag{display:inline-block;margin-top:10px}}</style></head><body>${report}</body></html>` : report;
+}
+function downloadProvisionalReport(){
+  const c=findCase(state.caseId); if(!c) return;
+  downloadBlob(`${c.id}_provisional_fir_report.html`, provisionalReportMarkup(c.id,true), 'text/html');
+}
+function renderProvisionalReport(){
+  const c=findCase(state.caseId);
+  return `<div class="panel">${provisionalReportMarkup(state.caseId)}<div style="margin-top:20px; display:flex; gap:10px; flex-wrap:wrap;"><button class="btn" onclick="downloadProvisionalReport()">Download report (HTML)</button><button class="btn secondary" onclick="setTab('timeline')">Review events</button></div></div>`;
+}
+
+/* =========================================================================
    MAIN RENDER
    ========================================================================= */
 function renderTabContent(){
@@ -1184,6 +1305,7 @@ function renderTabContent(){
     case 'reliability': return renderReliability();
     case 'analytics': return renderAnalytics();
     case 'export': return renderExport();
+    case 'report': return renderProvisionalReport();
     default: return '';
   }
 }
